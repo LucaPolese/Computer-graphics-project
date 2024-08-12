@@ -1,0 +1,65 @@
+# Blender 4.1.1 MTL File: 'MyRoad.blend'
+# www.blender.org
+
+newmtl Autumn_Leaves
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Wood051_1K-JPG_Color.jpg
+map_Ns Wood051_1K-JPG_Roughness.jpg
+map_Bump -bm 10.000000 Wood051_1K-JPG_NormalGL.jpg
+
+newmtl Black_Marble
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Marble016_1K-JPG_Color.jpg
+map_Ns Marble016_1K-JPG_Roughness.jpg
+map_Bump -bm 1.000000 Marble016_1K-JPG_NormalGL.jpg
+
+newmtl Black_Melamine
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.009446 0.009633 0.009490
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Handle_material
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.578000 0.555000 0.736000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Polished_Chrome
+Ns 810.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl White_Marble
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Marble004_1K-JPG_Color.jpg
+map_Ns Marble004_1K-JPG_Roughness.jpg
+map_d Marble004_1K-JPG_Opacity.jpg
+map_Bump -bm 1.000000 Marble004_1K-JPG_NormalGL.jpg
