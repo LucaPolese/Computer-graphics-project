@@ -239,9 +239,10 @@ function loadModel(objHref) {
 
             const textures = {
                 defaultWhite: create1PixelTexture(gl, [255, 255, 255, 255]),
+                defaultNormal: create1PixelTexture(gl, [127, 127, 255, 0])
             };
 
-            // load texture for materials
+            // Load textures for materials
             for (const material of Object.values(materials)) {
                 Object.entries(material)
                     .filter(([key]) => key.endsWith('Map'))
@@ -259,37 +260,22 @@ function loadModel(objHref) {
             const defaultMaterial = {
                 diffuse: [1, 1, 1],
                 diffuseMap: textures.defaultWhite,
+                normalMap: textures.defaultNormal,
                 ambient: [0, 0, 0],
                 specular: [1, 1, 1],
+                specularMap: textures.defaultWhite,
                 shininess: 400,
                 opacity: 1,
             };
 
             const parts = obj.geometries.map(({ material, data }) => {
-                // Because data is just named arrays like this
-                //
-                // {
-                //   position: [...],
-                //   texcoord: [...],
-                //   normal: [...],
-                // }
-                //
-                // and because those names match the attributes in our vertex
-                // shader we can pass it directly into `createBufferInfoFromArrays`
-                // from the article "less code more fun".
-
                 if (data.color) {
                     if (data.position.length === data.color.length) {
-                        // it's 3. The our helper library assumes 4 so we need
-                        // to tell it there are only 3.
                         data.color = { numComponents: 3, data: data.color };
                     }
                 } else {
-                    // there are no vertex colors so just use constant white
                     data.color = { value: [1, 1, 1, 1] };
                 }
-                // create a buffer for each array by calling
-                // gl.createBuffer, gl.bindBuffer, gl.bufferData
                 const bufferInfo = webglUtils.createBufferInfoFromArrays(gl, data);
                 return {
                     material: {
@@ -300,7 +286,15 @@ function loadModel(objHref) {
                 };
             });
 
-            resolve(parts);
+            // Calculate the extents and offset
+            const extents = getGeometriesExtents(obj.geometries);
+            const range = m4.subtractVectors(extents.max, extents.min);
+            const objOffset = m4.scaleVector(
+                m4.addVectors(extents.min, m4.scaleVector(range, 0.5)),
+                -1
+            );
+
+            resolve({ parts, objOffset });
         } catch (error) {
             reject(error);
         }
