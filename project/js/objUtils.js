@@ -1,6 +1,6 @@
 function parseMapArgs(unparsedArgs) {
-	// TODO: handle options
-	return unparsedArgs;
+    // TODO: handle options
+    return unparsedArgs;
 }
 
 function parseMTL(text) {
@@ -13,7 +13,7 @@ function parseMTL(text) {
     Kd(parts): colore diffuso 
     Ks(parts): colore speculare
     Ke(parts): colore emissivo
-    map_Kd(parts, unparsedArgs): diffuse tecture map
+    map_Kd(parts, unparsedArgs): diffuse texture map
     map_Ns(parts, unparsedArgs): specular texture map
     map_Bump(parts, unparsedArgs): bump map
     Ni(parts): indice di rifrazione
@@ -257,6 +257,12 @@ function loadModel(objHref) {
                     });
             }
 
+            // hack the materials so we can see the specular map
+            Object.values(materials).forEach(m => {
+                m.shininess = 25;
+                m.specular = [3, 2, 1];
+            });
+
             const defaultMaterial = {
                 diffuse: [1, 1, 1],
                 diffuseMap: textures.defaultWhite,
@@ -269,12 +275,44 @@ function loadModel(objHref) {
             };
 
             const parts = obj.geometries.map(({ material, data }) => {
+                // Because data is just named arrays like this
+                //
+                // {
+                //   position: [...],
+                //   texcoord: [...],
+                //   normal: [...],
+                // }
+                //
+                // and because those names match the attributes in our vertex
+                // shader we can pass it directly into `createBufferInfoFromArrays`
+                // from the article "less code more fun".
+
                 if (data.color) {
                     if (data.position.length === data.color.length) {
+                        // it's 3. The our helper library assumes 4 so we need
+                        // to tell it there are only 3.
                         data.color = { numComponents: 3, data: data.color };
                     }
                 } else {
+                    // there are no vertex colors so just use constant white
                     data.color = { value: [1, 1, 1, 1] };
+                }
+
+                // generate tangents if we have the data to do so.
+                if (data.texcoord && data.normal) {
+                    data.tangent = generateTangents(data.position, data.texcoord);
+                } else {
+                    // There are no tangents
+                    data.tangent = { value: [1, 0, 0] };
+                }
+
+                if (!data.texcoord) {
+                    data.texcoord = { value: [0, 0] };
+                }
+
+                if (!data.normal) {
+                    // we probably want to generate normals if there are none
+                    data.normal = { value: [0, 0, 1] };
                 }
                 const bufferInfo = webglUtils.createBufferInfoFromArrays(gl, data);
                 return {
@@ -286,15 +324,7 @@ function loadModel(objHref) {
                 };
             });
 
-            // Calculate the extents and offset
-            const extents = getGeometriesExtents(obj.geometries);
-            const range = m4.subtractVectors(extents.max, extents.min);
-            const objOffset = m4.scaleVector(
-                m4.addVectors(extents.min, m4.scaleVector(range, 0.5)),
-                -1
-            );
-
-            resolve({ parts, objOffset });
+            resolve(parts);
         } catch (error) {
             reject(error);
         }
