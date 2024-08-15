@@ -10,7 +10,7 @@ d 1.000000
 illum 2
 map_Kd Wood051_1K-JPG_Color.jpg
 map_Ns Wood051_1K-JPG_Roughness.jpg
-map_Bump -bm 10.000000 Wood051_1K-JPG_NormalGL.jpg
+map_Bump Wood051_1K-JPG_NormalGL.jpg
 
 newmtl Black_Marble
 Ka 1.000000 1.000000 1.000000
@@ -21,7 +21,7 @@ d 1.000000
 illum 2
 map_Kd Marble016_1K-JPG_Color.jpg
 map_Ns Marble016_1K-JPG_Roughness.jpg
-map_Bump -bm 1.000000 Marble016_1K-JPG_NormalGL.jpg
+map_Bump Marble016_1K-JPG_NormalGL.jpg
 
 newmtl Black_Melamine
 Ns 250.000000
@@ -62,4 +62,4 @@ illum 2
 map_Kd Marble004_1K-JPG_Color.jpg
 map_Ns Marble004_1K-JPG_Roughness.jpg
 map_d Marble004_1K-JPG_Opacity.jpg
-map_Bump -bm 1.000000 Marble004_1K-JPG_NormalGL.jpg
+map_Bump Marble004_1K-JPG_NormalGL.jpg

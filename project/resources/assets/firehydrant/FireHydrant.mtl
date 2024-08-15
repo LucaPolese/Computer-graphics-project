@@ -11,4 +11,4 @@ illum 2
 map_Kd PaintedMetal004_1K-JPG_Color.jpg
 map_Ns PaintedMetal004_1K-JPG_Roughness.jpg
 map_refl PaintedMetal004_1K-JPG_Metalness.jpg
-map_Bump -bm 5.000000 PaintedMetal004_1K-JPG_NormalGL.jpg
+map_Bump PaintedMetal004_1K-JPG_NormalGL.jpg

@@ -11,4 +11,4 @@ illum 1
 map_Kd zapravkapaint_TD_Checker_BaseColor.png
 map_Ns zapravkapaint_TD_Checker_Roughness.png
 map_refl zapravkapaint_TD_Checker_Metallic.png
-map_Bump -bm 6.000000 zapravka2paint_TD_Checker_Normal.png
+map_Bump zapravka2paint_TD_Checker_Normal.png

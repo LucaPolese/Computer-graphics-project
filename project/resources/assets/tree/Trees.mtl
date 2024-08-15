@@ -10,7 +10,7 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Ks SpecularMap.png
-map_Bump -bm 1.000000 NormalMap.png
+map_Bump NormalMap.png
 
 newmtl TreeWood
 Ka 1.000000 1.000000 1.000000
@@ -21,4 +21,4 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Ns Bark012_1K-JPG_Roughness.jpg
-map_Bump -bm 5.000000 Bark012_1K-JPG_NormalGL.jpg
+map_Bump Bark012_1K-JPG_NormalGL.jpg

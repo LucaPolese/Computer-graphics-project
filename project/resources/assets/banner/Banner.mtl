@@ -11,7 +11,7 @@ illum 2
 map_Kd Metal046A_1K-JPG_Color.jpg
 map_Ns Metal046A_1K-JPG_Roughness.jpg
 map_refl Metal046A_1K-JPG_Metalness.jpg
-map_Bump -bm 1.000000 Metal046A_1K-JPG_NormalGL.jpg
+map_Bump Metal046A_1K-JPG_NormalGL.jpg
 
 newmtl LP
 Ns 200.000000

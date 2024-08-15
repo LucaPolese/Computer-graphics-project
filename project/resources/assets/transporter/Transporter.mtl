@@ -31,7 +31,7 @@ map_Kd PaintedMetal002_1K-JPG_Color.jpg
 map_Ns PaintedMetal002_1K-JPG_Roughness.jpg
 map_refl PaintedMetal002_1K-JPG_Metalness.jpg
 map_d PaintedMetal002_1K-JPG_Opacity.jpg
-map_Bump -bm 1.000000 PaintedMetal002_1K-JPG_NormalGL.jpg
+map_Bump PaintedMetal002_1K-JPG_NormalGL.jpg
 
 newmtl Chrome
 Ns 715.232666
