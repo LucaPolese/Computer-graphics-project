@@ -324,7 +324,15 @@ function loadModel(objHref) {
                 };
             });
 
-            resolve(parts);
+            // Calculate the extents and offset
+            const extents = getGeometriesExtents(obj.geometries);
+            const range = m4.subtractVectors(extents.max, extents.min);
+            const objOffset = m4.scaleVector(
+                m4.addVectors(extents.min, m4.scaleVector(range, 0.5)),
+                -1
+            );
+            
+            resolve({ parts, objOffset });
         } catch (error) {
             reject(error);
         }
