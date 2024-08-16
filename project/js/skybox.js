@@ -1,34 +1,32 @@
 "use strict";
 
 function main() {
-    // Obtain a WebGL context
-    /** @type {HTMLCanvasElement} */
-    var canvas = document.querySelector("#canvas");
-    var gl = canvas.getContext("webgl");
-    if (!gl) {
+
+    let gl = getWebGLContext("#canvas");
+    if (!gl) { 
         return;
     }
 
     // Initialize GLSL program
-    var program = webglUtils.createProgramFromScripts(gl, ["skybox-vertex-shader", "skybox-fragment-shader"]);
+    let program = webglUtils.createProgramFromScripts(gl, ["skybox-vertex-shader", "skybox-fragment-shader"]);
 
     // Locate where vertex data is required.
-    var positionLocation = gl.getAttribLocation(program, "a_position");
+    let positionLocation = gl.getAttribLocation(program, "a_position");
 
     // Locate uniforms
-    var skyboxLocation = gl.getUniformLocation(program, "u_skybox");
-    var viewDirectionProjectionInverseLocation =
+    let skyboxLocation = gl.getUniformLocation(program, "u_skybox");
+    let viewDirectionProjectionInverseLocation =
         gl.getUniformLocation(program, "u_viewDirectionProjectionInverse");
 
     // Create a buffer for position data
-    var positionBuffer = gl.createBuffer();
+    let positionBuffer = gl.createBuffer();
     // Bind the buffer to ARRAY_BUFFER (similar to ARRAY_BUFFER = positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     // Load positions into the buffer
     setGeometry(gl);
 
     // Create a texture
-    var texture = gl.createTexture();
+    let texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
 
     const faceInfos = [
@@ -85,31 +83,12 @@ function main() {
     gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
-    function radToDeg(r) {
-        return r * 180 / Math.PI;
-    }
-
-    function degToRad(d) {
-        return d * Math.PI / 180;
-    }
-
-    var fieldOfViewRadians = degToRad(60);
-    var cameraYRotationRadians = degToRad(0);
-
-    var spinCamera = true;
-    // Capture the initial time
-    var then = 0;
+    let fieldOfViewRadians = degToRad(60);
 
     requestAnimationFrame(drawScene);
 
     // Render the scene
-    function drawScene(time) {
-        // Convert time to seconds
-        time *= 0.001;
-        // Compute the time difference from the last frame
-        var deltaTime = time - then;
-        // Store the current time for the next frame
-        then = time;
+    function drawScene() {
 
         webglUtils.resizeCanvasToDisplaySize(gl.canvas);
 
@@ -132,38 +111,37 @@ function main() {
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
         // Specify how to pull data out of the positionBuffer (ARRAY_BUFFER)
-        var size = 2;          // 2 components per iteration
-        var type = gl.FLOAT;   // data is 32bit floats
-        var normalize = false; // do not normalize the data
-        var stride = 0;        // move forward size * sizeof(type) each iteration
-        var offset = 0;        // start at the beginning of the buffer
+        let size = 2;          // 2 components per iteration
+        let type = gl.FLOAT;   // data is 32bit floats
+        let normalize = false; // do not normalize the data
+        let stride = 0;        // move forward size * sizeof(type) each iteration
+        let offset = 0;        // start at the beginning of the buffer
         gl.vertexAttribPointer(
             positionLocation, size, type, normalize, stride, offset);
 
         // Compute the projection matrix
-        var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-        var projectionMatrix =
+        let aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+        let projectionMatrix =
             m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
 
         // Set the camera position to circle 2 units from origin, looking at the origin
-        // var cameraPosition = [Math.cos(time * .1), 0, Math.sin(time * .1)];
-        var cameraPosition = cameraPositionMain
-        var target = [0, 0, 0];
-        var up = [0, 1, 0];
+        let cameraPosition = cameraPositionMain
+        let target = [0, 0, 0];
+        let up = [0, 1, 0];
         // Compute the camera's matrix using lookAt
-        var cameraMatrix = m4.lookAt(cameraPosition, target, up);
+        let cameraMatrix = m4.lookAt(cameraPosition, target, up);
 
         // Derive a view matrix from the camera matrix
-        var viewMatrix = m4.inverse(cameraMatrix);
+        let viewMatrix = m4.inverse(cameraMatrix);
 
         // Remove the translation component from the view matrix as we only care about direction
         viewMatrix[12] = 0;
         viewMatrix[13] = 0;
         viewMatrix[14] = 0;
 
-        var viewDirectionProjectionMatrix =
+        let viewDirectionProjectionMatrix =
             m4.multiply(projectionMatrix, viewMatrix);
-        var viewDirectionProjectionInverseMatrix =
+        let viewDirectionProjectionInverseMatrix =
             m4.inverse(viewDirectionProjectionMatrix);
 
         // Set the uniform variables
@@ -186,7 +164,7 @@ function main() {
 
 // Fill the buffer with values defining a quad
 function setGeometry(gl) {
-    var positions = new Float32Array(
+    let positions = new Float32Array(
         [
             -1, -1,
             1, -1,
