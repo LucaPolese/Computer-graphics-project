@@ -8,7 +8,8 @@ Kd 0.800000 0.800000 0.800000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
-illum 2
+illum 1
+map_Kd Foliage.jpg
 map_Ks SpecularMap.png
 map_Bump NormalMap.png
 
@@ -19,6 +20,7 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
-illum 2
+illum 1
+map_Kd Bark012_1K-JPG_Color.jpg
 map_Ns Bark012_1K-JPG_Roughness.jpg
 map_Bump Bark012_1K-JPG_NormalGL.jpg
