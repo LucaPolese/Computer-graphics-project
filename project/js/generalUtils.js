@@ -6,9 +6,9 @@ function radToDeg(r) {
     return r * 180 / Math.PI;
 }
 
-function getWebGLContext(canvasSelector) {
+function getWebGLContext() {
     /** @type {HTMLCanvasElement} */
-    let canvas = document.querySelector(canvasSelector);
+    let canvas = document.querySelector("canvas");
     let gl = canvas.getContext("webgl");
     if (!gl) {
         return null;
