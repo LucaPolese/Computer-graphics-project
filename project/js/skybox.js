@@ -2,7 +2,7 @@
 
 function main() {
 
-    let gl = getWebGLContext("#canvas");
+    let gl = getWebGLContext();
     if (!gl) { 
         return;
     }
@@ -125,11 +125,11 @@ function main() {
             m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
 
         // Set the camera position to circle 2 units from origin, looking at the origin
-        let cameraPosition = cameraPositionMain
+        let skyboxCameraPosition = cameraPosition
         let target = [0, 0, 0];
         let up = [0, 1, 0];
         // Compute the camera's matrix using lookAt
-        let cameraMatrix = m4.lookAt(cameraPosition, target, up);
+        let cameraMatrix = m4.lookAt(skyboxCameraPosition, target, up);
 
         // Derive a view matrix from the camera matrix
         let viewMatrix = m4.inverse(cameraMatrix);
