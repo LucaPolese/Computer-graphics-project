@@ -9,6 +9,16 @@
 	<body>
 		<canvas id="canvas"></canvas>
 
+		<div id="loadingModal" class="modal">
+			<div class="modal-content">
+				<p>Loading, please wait...</p>
+				<div class="progress-container">
+					<div id="progressBar" class="progress-bar"></div>
+				</div>
+				<p id="progressText">0%</p>
+			</div>
+		</div>
+		
 		<script id="skybox-vertex-shader" type="x-shader/x-vertex">
 			attribute vec4 a_position;
 			varying vec4 v_position;
@@ -36,7 +46,9 @@
 
 		<script src="js/vertexAndFragment.js"></script>
 
+		<script src="js/generalUtils.js"></script>
 		<script src="js/transformationUtils.js"></script>
+		<script src="js/geometryUtils.js"></script>
 		<script src="js/objUtils.js"></script>
 		<script src="js/textureUtils.js"></script>
 
