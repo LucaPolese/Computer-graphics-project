@@ -5,14 +5,12 @@ let keys = {
     s : false,
     d : false,
     r : false,
-    ArrowUp: false,
-    ArrowDown: false,
     ArrowLeft: false,
     ArrowRight: false
 }
 
-let moveSpeed = 0.1;
-let turnSpeed = degToRad(0.5);
+let moveSpeed = 0.05;
+let turnSpeed = degToRad(0.6);
 
 // ----------------- Keyboard Listeners -----------------
 window.addEventListener('keydown', (event) => {
@@ -70,12 +68,6 @@ function updateCameraPosition() {
         const right = [moveSpeed, 0, 0];
         m4.translate(cameraPosition, ...right, cameraPosition);
     }
-    if (keys['ArrowUp']) {
-        m4.xRotate(cameraPosition, turnSpeed, cameraPosition); // Pitch up
-    }
-    if (keys['ArrowDown']) {
-        m4.xRotate(cameraPosition, -turnSpeed, cameraPosition); // Pitch down
-    }
     if (keys['ArrowLeft']) {
         m4.yRotate(cameraPosition, turnSpeed, cameraPosition); // Yaw left
     }
@@ -89,10 +81,6 @@ function updateCameraPosition() {
         const leftStickX = gp.axes[0];
         const leftStickY = gp.axes[1];
 
-        // Right stick axes for camera control
-        const rightStickX = gp.axes[2];
-        const rightStickY = gp.axes[3];
-
         // Gamepad movement
         if (Math.abs(leftStickY) > 0.1) { // Deadzone check
             const forward = [0, 0, leftStickY * moveSpeed];
@@ -103,10 +91,8 @@ function updateCameraPosition() {
             m4.translate(cameraPosition, ...strafe, cameraPosition);
         }
 
-        // Gamepad rotation
-        if (Math.abs(rightStickY) > 0.1) {
-            m4.xRotate(cameraPosition, -rightStickY * turnSpeed, cameraPosition); // Pitch up/down
-        }
+        // Gamepad rotation (Yaw only)
+        const rightStickX = gp.axes[2];
         if (Math.abs(rightStickX) > 0.1) {
             m4.yRotate(cameraPosition, -rightStickX * turnSpeed, cameraPosition); // Yaw left/right
         }
