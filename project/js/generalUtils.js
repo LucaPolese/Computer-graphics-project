@@ -15,4 +15,12 @@ function getWebGLContext() {
     }
     return gl;
 }
+
+function showLoadingModal() {
+    document.getElementById('loadingModal').style.display = 'block';
+}
+
+function hideLoadingModal() {
+    document.getElementById('loadingModal').style.display = 'none';
+}
     

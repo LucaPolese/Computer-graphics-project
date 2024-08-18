@@ -3,14 +3,6 @@ let gl = getWebGLContext();
 let initialCameraPosition = m4.translation(-0.5, 1, 8); // Initial camera position at Y = 1
 let cameraPosition = m4.copy(initialCameraPosition);
 
-function showLoadingModal() {
-    document.getElementById('loadingModal').style.display = 'block';
-}
-
-function hideLoadingModal() {
-    document.getElementById('loadingModal').style.display = 'none';
-}
-
 function updateProgressBar(percentage) {
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
@@ -24,6 +16,7 @@ async function loadModel(url, index, total) {
     return model;
 }
 
+// Main WebGL rendering loop
 async function main() {
     if (!gl) {
         return;
@@ -85,7 +78,6 @@ async function main() {
 
         // Render the models
         function renderModel(model) {
-
             for (const { bufferInfo, material } of model.parts) {
                 webglUtils.setBuffersAndAttributes(gl, meshProgramInfo, bufferInfo);
                 webglUtils.setUniforms(meshProgramInfo, { u_world }, material);
@@ -95,9 +87,10 @@ async function main() {
 
         models.forEach(renderModel);
 
-        requestAnimationFrame(render);
+        requestAnimationFrame(render); // Continue the render loop
     }
-    requestAnimationFrame(render);
+
+    requestAnimationFrame(render); // Start the render loop
 }
 
 main();
