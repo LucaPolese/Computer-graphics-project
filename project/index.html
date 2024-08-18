@@ -5,17 +5,61 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Computer graphics project</title>
 		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    	<script src="https://cdn.tailwindcss.com"></script>
 	</head>
-	<body>
-		<canvas id="canvas"></canvas>
-
-		<div id="loadingModal" class="modal">
-			<div class="modal-content">
+	<body class="relative">
+		<div id="loadingModal" class="modal fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+			<div class="modal-content bg-white p-4 rounded shadow-lg text-center">
 				<p>Loading, please wait...</p>
-				<div class="progress-container">
-					<div id="progressBar" class="progress-bar"></div>
+				<div class="progress-container w-full bg-gray-200 rounded-full h-2.5 mt-2">
+					<div id="progressBar" class="progress-bar bg-blue-500 h-2.5 rounded-full" style="width: 0%;"></div>
 				</div>
-				<p id="progressText">0%</p>
+				<p id="progressText" class="mt-2">0%</p>
+			</div>
+		</div>
+	
+		<canvas id="canvas" class="z-0"></canvas>
+	
+		<div class="absolute top-4 left-4 lg:hidden">
+			<button id="r" class="bg-red-500 text-white font-bold py-2 px-4 rounded">
+				Reload
+			</button>
+		</div>
+
+		<div class="absolute bottom-0 w-full p-4 lg:hidden">
+			<div class="flex justify-between">
+				<!-- WASD Controls -->
+				<div class="flex flex-col justify-center items-start w-1/2">
+					<div class="grid grid-cols-3 gap-2">
+						<div></div>
+						<button id="w" class="bg-blue-500 text-white font-bold py-2 px-3 rounded">W</button>
+						<div></div>
+						<button id="a" class="bg-blue-500 text-white font-bold py-2 px-3 rounded">A</button>
+						<button id="s" class="bg-blue-500 text-white font-bold py-2 px-3 rounded">S</button>
+						<button id="d" class="bg-blue-500 text-white font-bold py-2 px-3 rounded">D</button>
+					</div>
+				</div>
+	
+				<!-- Arrow Controls -->
+				<div class="flex flex-col justify-center items-end w-1/2">
+					<div class="grid grid-cols-3 gap-2">
+						<div></div>
+						<button id="ArrowUp" class="bg-green-500 text-white font-bold py-2 px-3 rounded">
+							<i class="fas fa-arrow-up"></i>
+						</button>
+						<div></div>
+						<button id="ArrowLeft" class="bg-green-500 text-white font-bold py-2 px-3 rounded">
+							<i class="fas fa-arrow-left"></i>
+						</button>
+						<button id="ArrowDown" class="bg-green-500 text-white font-bold py-2 px-3 rounded">
+							<i class="fas fa-arrow-down"></i>
+						</button>
+						<button id="ArrowRight" class="bg-green-500 text-white font-bold py-2 px-3 rounded">
+							<i class="fas fa-arrow-right"></i>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 		

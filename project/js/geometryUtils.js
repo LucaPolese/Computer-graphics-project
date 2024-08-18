@@ -4,6 +4,7 @@ let keys = {
     a : false,
     s : false,
     d : false,
+    r : false,
     ArrowUp: false,
     ArrowDown: false,
     ArrowLeft: false,
@@ -20,6 +21,24 @@ window.addEventListener('keydown', (event) => {
 window.addEventListener('keyup', (event) => {
     keys[event.key] = false;
 });
+
+// Function to add touch event listeners to buttons
+function addTouchListeners(key) {
+    const button = document.getElementById(key);
+    if (button) {
+        button.addEventListener('touchstart', () => {
+            keys[key] = true;
+        });
+        button.addEventListener('touchend', () => {
+            keys[key] = false;
+        });
+    }
+}
+
+// Apply touch listeners to each key/button based on the keys object
+for (const key in keys) {
+    addTouchListeners(key);
+}
 
 function updateCameraPosition() {
     if (keys['w']) {
