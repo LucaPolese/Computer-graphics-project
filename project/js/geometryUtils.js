@@ -7,10 +7,14 @@ let keys = {
     r : false,
     ArrowLeft: false,
     ArrowRight: false
-}
+};
 
 let moveSpeed = 0.05;
 let turnSpeed = degToRad(0.6);
+let zoomSpeed = 1.2; // Adjust this value to change zoom speed
+
+let isMouseDown = false;
+let lastMouseX = 0;
 
 // ----------------- Keyboard Listeners -----------------
 window.addEventListener('keydown', (event) => {
@@ -39,6 +43,39 @@ function addTouchListeners(key) {
 for (const key in keys) {
     addTouchListeners(key);
 }
+
+// ----------------- Mouse Listeners -----------------
+window.addEventListener('mousedown', (event) => {
+    isMouseDown = true;
+    lastMouseX = event.clientX;
+});
+
+window.addEventListener('mouseup', () => {
+    isMouseDown = false;
+});
+
+window.addEventListener('mousemove', (event) => {
+    if (isMouseDown) {
+        const deltaX = event.clientX - lastMouseX;
+        lastMouseX = event.clientX;
+
+        // Adjust the turnSpeed based on mouse movement
+        const rotationAmount = deltaX * turnSpeed * 0.1;
+        m4.yRotate(cameraPosition, -rotationAmount, cameraPosition);
+    }
+});
+
+// ----------------- Wheel Zooming Listener -----------------
+window.addEventListener('wheel', (event) => {
+    const zoomDirection = event.deltaY > 0 ? 1 : -1;
+    const zoomAmount = zoomSpeed * zoomDirection;
+
+    // Calculate the forward direction
+    const forward = [0, 0, zoomAmount];
+
+    // Translate the camera position along the forward direction
+    m4.translate(cameraPosition, ...forward, cameraPosition);
+});
 
 // ----------------- Camera Movement -----------------
 function updateCameraPosition() {
