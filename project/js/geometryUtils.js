@@ -15,6 +15,7 @@ let zoomSpeed = 1.2; // Adjust this value to change zoom speed
 
 let isMouseDown = false;
 let lastMouseX = 0;
+let isInteractingWithSlider = false; // Track slider interaction
 
 // ----------------- Keyboard Listeners -----------------
 window.addEventListener('keydown', (event) => {
@@ -46,16 +47,23 @@ for (const key in keys) {
 
 // ----------------- Mouse Listeners -----------------
 window.addEventListener('mousedown', (event) => {
-    isMouseDown = true;
-    lastMouseX = event.clientX;
+    // Check if the click is on a slider
+    if (event.target.tagName === 'INPUT' && event.target.type === 'range') {
+        isInteractingWithSlider = true;
+    } else {
+        isMouseDown = true;
+        lastMouseX = event.clientX;
+    }
 });
 
 window.addEventListener('mouseup', () => {
     isMouseDown = false;
+    isInteractingWithSlider = false;
 });
 
 window.addEventListener('mousemove', (event) => {
-    if (isMouseDown) {
+    // Only rotate the camera if the mouse is down and not interacting with a slider
+    if (isMouseDown && !isInteractingWithSlider) {
         const deltaX = event.clientX - lastMouseX;
         lastMouseX = event.clientX;
 
@@ -67,14 +75,17 @@ window.addEventListener('mousemove', (event) => {
 
 // ----------------- Wheel Zooming Listener -----------------
 window.addEventListener('wheel', (event) => {
-    const zoomDirection = event.deltaY > 0 ? 1 : -1;
-    const zoomAmount = zoomSpeed * zoomDirection;
+    // Only zoom if not interacting with a slider
+    if (!isInteractingWithSlider) {
+        const zoomDirection = event.deltaY > 0 ? 1 : -1;
+        const zoomAmount = zoomSpeed * zoomDirection;
 
-    // Calculate the forward direction
-    const forward = [0, 0, zoomAmount];
+        // Calculate the forward direction
+        const forward = [0, 0, zoomAmount];
 
-    // Translate the camera position along the forward direction
-    m4.translate(cameraPosition, ...forward, cameraPosition);
+        // Translate the camera position along the forward direction
+        m4.translate(cameraPosition, ...forward, cameraPosition);
+    }
 });
 
 // ----------------- Camera Movement -----------------

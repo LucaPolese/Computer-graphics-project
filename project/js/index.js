@@ -3,6 +3,23 @@ let gl = getWebGLContext();
 let initialCameraPosition = m4.translation(-0.5, 1, 8); // Initial camera position at Y = 1
 let cameraPosition = m4.copy(initialCameraPosition);
 
+// Initialize the light direction with default values
+let lightDirection = m4.normalize([0, 1, 0]);
+
+// Function to update the light direction based on slider values
+function updateLightDirection() {
+    const x = parseFloat(document.getElementById('lightX').value);
+    const y = parseFloat(document.getElementById('lightY').value);
+    const z = parseFloat(document.getElementById('lightZ').value);
+    lightDirection = m4.normalize([x, y, z]);
+}
+
+// Add event listeners to the sliders to update the light direction
+document.getElementById('lightX').addEventListener('input', updateLightDirection);
+document.getElementById('lightY').addEventListener('input', updateLightDirection);
+document.getElementById('lightZ').addEventListener('input', updateLightDirection);
+
+
 function updateProgressBar(percentage) {
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
@@ -63,11 +80,11 @@ async function main() {
         const viewMatrix = m4.inverse(cameraPosition);
 
         const sharedUniforms = {
-            u_lightDirection: m4.normalize([0, 1, 0]),
+            u_lightDirection: lightDirection,
             u_view: viewMatrix,
             u_projection: projection,
             u_viewWorldPosition: [-0.5, 1, 8],
-            u_normalMappingEnabled : normalMappingEnabled ? 1 : 0,
+            u_normalMappingEnabled: normalMappingEnabled ? 1 : 0,
         };
 
         gl.useProgram(meshProgramInfo.program);
