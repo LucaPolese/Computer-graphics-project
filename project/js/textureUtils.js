@@ -91,3 +91,10 @@ function generateTangents(position, texcoord, indices) {
 
     return tangents;
 }
+
+// ----------------- Normal Mapping -----------------
+let normalMappingEnabled = false;
+
+document.getElementById('normalMap').addEventListener('change', (event) => {
+    normalMappingEnabled = event.target.checked;
+});

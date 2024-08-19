@@ -63,10 +63,11 @@ async function main() {
         const viewMatrix = m4.inverse(cameraPosition);
 
         const sharedUniforms = {
-            u_lightDirection: m4.normalize([0, 1, 0]), // Light pointing downwards from above
+            u_lightDirection: m4.normalize([0, 1, 0]),
             u_view: viewMatrix,
             u_projection: projection,
-            u_viewWorldPosition: [-0.5, 1, 8]
+            u_viewWorldPosition: [-0.5, 1, 8],
+            u_normalMappingEnabled : normalMappingEnabled ? 1 : 0,
         };
 
         gl.useProgram(meshProgramInfo.program);

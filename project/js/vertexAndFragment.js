@@ -137,6 +137,9 @@ uniform vec3 u_lightDirection;
 uniform vec3 u_ambientLight;
 
 
+// A flag to enable or disable normal mapping.
+uniform int u_normalMappingEnabled;
+
 // The main function, where the shader's computation begins for each fragment.
 void main () {
     // Normalize the interpolated normal vector to ensure it has a length of 1.
@@ -144,27 +147,27 @@ void main () {
     // If the fragment is on the back-facing side, the normal is inverted to ensure correct lighting.
     vec3 normal = normalize(v_normal) * ( float( gl_FrontFacing ) * 2.0 - 1.0 );
 
-    // Normalize the interpolated tangent vector to ensure it has a length of 1.
-    // The same front-facing check is applied to the tangent to maintain consistency with the normal.
-    vec3 tangent = normalize(v_tangent) * ( float( gl_FrontFacing ) * 2.0 - 1.0 );
+    if(u_normalMappingEnabled == 1){
+        // Normalize the interpolated tangent vector to ensure it has a length of 1.
+        // The same front-facing check is applied to the tangent to maintain consistency with the normal.
+        vec3 tangent = normalize(v_tangent) * ( float( gl_FrontFacing ) * 2.0 - 1.0 );
 
-    // Calculate the bitangent vector by taking the cross product of the normal and tangent vectors.
-    // The bitangent is perpendicular to both the normal and tangent, completing the TBN matrix.
-    vec3 bitangent = normalize(cross(normal, tangent));
+        // Calculate the bitangent vector by taking the cross product of the normal and tangent vectors.
+        // The bitangent is perpendicular to both the normal and tangent, completing the TBN matrix.
+        vec3 bitangent = normalize(cross(normal, tangent));
 
+        // Create a 3x3 TBN (Tangent, Bitangent, Normal) matrix using the tangent, bitangent, and normal vectors.
+        // This matrix transforms vectors from tangent space to world space.
+        mat3 tbn = mat3(tangent, bitangent, normal);
 
-    // Create a 3x3 TBN (Tangent, Bitangent, Normal) matrix using the tangent, bitangent, and normal vectors.
-    // This matrix transforms vectors from tangent space to world space.
-    mat3 tbn = mat3(tangent, bitangent, normal);
+        // Sample the normal map at the given texture coordinates to get the normal vector in tangent space.
+        // The normal map's RGB values are in the range [0, 1], so we scale them to [-1, 1] by multiplying by 2 and subtracting 1.
+        normal = texture2D(normalMap, v_texcoord).rgb * 2.0 - 1.0;
 
-    // Sample the normal map at the given texture coordinates to get the normal vector in tangent space.
-    // The normal map's RGB values are in the range [0, 1], so we scale them to [-1, 1] by multiplying by 2 and subtracting 1.
-    normal = texture2D(normalMap, v_texcoord).rgb * 2.0 - 1.0;
-
-    // Transform the sampled normal from tangent space to world space using the TBN matrix.
-    // The result is the final normal vector used for lighting calculations.
-    normal = normalize(tbn * normal);
-
+        // Transform the sampled normal from tangent space to world space using the TBN matrix.
+        // The result is the final normal vector used for lighting calculations.
+        normal = normalize(tbn * normal);
+    }
 
     // Normalize the surface-to-view direction vector to ensure it has a length of 1. This vector points from the fragment to the camera.
     vec3 surfaceToViewDirection = normalize(v_surfaceToView);
