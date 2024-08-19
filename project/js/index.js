@@ -1,6 +1,6 @@
 "use strict";
 let gl = getWebGLContext();
-let initialCameraPosition = m4.translation(-0.5, 1, 8); // Initial camera position at Y = 1
+let initialCameraPosition = m4.translation(0, 1, 7); // Initial camera position at Y = 1
 let cameraPosition = m4.copy(initialCameraPosition);
 
 // Initialize the light direction with default values
@@ -83,7 +83,7 @@ async function main() {
             u_lightDirection: lightDirection,
             u_view: viewMatrix,
             u_projection: projection,
-            u_viewWorldPosition: [-0.5, 1, 8],
+            u_viewWorldPosition: initialCameraPosition,
             u_normalMappingEnabled: normalMappingEnabled ? 1 : 0,
         };
 

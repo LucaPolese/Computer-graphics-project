@@ -244,6 +244,7 @@ function setUpDefaultTexture(gl) {
 async function loadObj(gl, objHref) {
     const response = await fetch(objHref);
     const text = await response.text();
+    if(objHref.endsWith("Road.obj")) {calculateObjBoundaries(text)};
     const obj = parseOBJ(text);
     const baseHref = new URL(objHref, window.location.href);
 

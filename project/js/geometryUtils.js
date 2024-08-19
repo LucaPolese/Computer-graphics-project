@@ -84,14 +84,71 @@ window.addEventListener('wheel', (event) => {
         const forward = [0, 0, zoomAmount];
 
         // Translate the camera position along the forward direction
-        m4.translate(cameraPosition, ...forward, cameraPosition);
+        const newPosition = [...cameraPosition];
+        m4.translate(newPosition, ...forward, newPosition);
+
+        // Check if the new position is within the road boundaries before updating the camera position
+        if (isWithinRoadBoundaries(newPosition)) {
+            m4.copy(newPosition, cameraPosition);
+        }
     }
 });
 
 // ----------------- Camera Movement -----------------
+let roadBoundaries = {
+    minX: Infinity,
+    minZ: Infinity,
+    maxX: -Infinity,
+    maxZ: -Infinity
+};
+
+// Define the boundaries of the road
+async function calculateObjBoundaries(objData) {
+    // Initialize the boundaries with extreme values
+
+    // Split the OBJ file data by lines
+    const lines = objData.split('\n');
+
+    // Loop through each line of the OBJ file
+    lines.forEach(line => {
+        // Trim any extra spaces
+        line = line.trim();
+
+        // Check if the line starts with 'v ' (which indicates a vertex position)
+        if (line.startsWith('v ')) {
+            // Extract the x, y, z coordinates
+            const [_ ,xStr, __ , zStr] = line.split(/\s+/);
+            const x = parseFloat(xStr);
+            const z = parseFloat(zStr);
+
+            // Update the boundaries
+            if (x < roadBoundaries.minX) roadBoundaries.minX = x;
+            if (x > roadBoundaries.maxX) roadBoundaries.maxX = x;
+            if (z < roadBoundaries.minZ) roadBoundaries.minZ = z;
+            if (z > roadBoundaries.maxZ) roadBoundaries.maxZ = z;
+        }
+    });
+}
+
+// Function to check if the camera position is within the road boundaries
+function isWithinRoadBoundaries(position) {
+    let userPosition = {
+        x : position[12],
+        y : position[13],
+        z : position[14]
+    }
+    return (
+        userPosition.x >= roadBoundaries.minX && userPosition.x <= roadBoundaries.maxX &&
+        userPosition.z >= roadBoundaries.minZ && userPosition.z <= roadBoundaries.maxZ
+    );
+}
+
 function updateCameraPosition() {
     const gamepads = navigator.getGamepads();
     const gp = gamepads[0];
+
+    // Temporary variable to store the proposed new position
+    let newPosition = [...cameraPosition];
 
     // Reset camera position if the 'r' key or the corresponding gamepad button is pressed
     if (keys['r'] || (gp && gp.buttons[0].pressed)) {
@@ -102,25 +159,25 @@ function updateCameraPosition() {
     // Handle Keyboard Input for movement and rotation
     if (keys['w']) {
         const forward = [0, 0, -moveSpeed];
-        m4.translate(cameraPosition, ...forward, cameraPosition);
+        m4.translate(newPosition, ...forward, newPosition);
     }
     if (keys['s']) {
         const backward = [0, 0, moveSpeed];
-        m4.translate(cameraPosition, ...backward, cameraPosition);
+        m4.translate(newPosition, ...backward, newPosition);
     }
     if (keys['a']) {
         const left = [-moveSpeed, 0, 0];
-        m4.translate(cameraPosition, ...left, cameraPosition);
+        m4.translate(newPosition, ...left, newPosition);
     }
     if (keys['d']) {
         const right = [moveSpeed, 0, 0];
-        m4.translate(cameraPosition, ...right, cameraPosition);
+        m4.translate(newPosition, ...right, newPosition);
     }
     if (keys['ArrowLeft']) {
-        m4.yRotate(cameraPosition, turnSpeed, cameraPosition); // Yaw left
+        m4.yRotate(newPosition, turnSpeed, newPosition); // Yaw left
     }
     if (keys['ArrowRight']) {
-        m4.yRotate(cameraPosition, -turnSpeed, cameraPosition); // Yaw right
+        m4.yRotate(newPosition, -turnSpeed, newPosition); // Yaw right
     }
 
     // Handle Gamepad Input
@@ -132,17 +189,22 @@ function updateCameraPosition() {
         // Gamepad movement
         if (Math.abs(leftStickY) > 0.1) { // Deadzone check
             const forward = [0, 0, leftStickY * moveSpeed];
-            m4.translate(cameraPosition, ...forward, cameraPosition);
+            m4.translate(newPosition, ...forward, newPosition);
         }
         if (Math.abs(leftStickX) > 0.1) {
             const strafe = [leftStickX * moveSpeed, 0, 0];
-            m4.translate(cameraPosition, ...strafe, cameraPosition);
+            m4.translate(newPosition, ...strafe, newPosition);
         }
 
         // Gamepad rotation (Yaw only)
         const rightStickX = gp.axes[2];
         if (Math.abs(rightStickX) > 0.1) {
-            m4.yRotate(cameraPosition, -rightStickX * turnSpeed, cameraPosition); // Yaw left/right
+            m4.yRotate(newPosition, -rightStickX * turnSpeed, newPosition); // Yaw left/right
         }
+    }
+
+    // Check if the new position is within the road boundaries before updating the camera position
+    if (isWithinRoadBoundaries(newPosition)) {
+        m4.copy(newPosition, cameraPosition);
     }
 }
