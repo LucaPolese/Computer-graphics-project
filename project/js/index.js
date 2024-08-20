@@ -19,20 +19,6 @@ document.getElementById('lightX').addEventListener('input', updateLightDirection
 document.getElementById('lightY').addEventListener('input', updateLightDirection);
 document.getElementById('lightZ').addEventListener('input', updateLightDirection);
 
-
-function updateProgressBar(percentage) {
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    progressBar.style.width = percentage + '%';
-    progressText.textContent = percentage + '%';
-}
-
-async function loadModel(url, index, total) {
-    const model = await loadObj(gl, url);
-    updateProgressBar(Math.round(((index + 1) / total) * 100));
-    return model;
-}
-
 // Main WebGL rendering loop
 async function main() {
     if (!gl) {
@@ -59,7 +45,11 @@ async function main() {
         './resources/assets/tree/Trees.obj'
     ];
 
-    const models = await Promise.all(assets.map((url, index) => loadModel(url, index, assets.length)));
+    // Simulate loading all models
+    const models = await Promise.all(assets.map(async url => {
+        const model = await loadObj(gl, url);
+        return model;
+    }));
 
     hideLoadingModal();
 
@@ -103,6 +93,7 @@ async function main() {
             }
         }
 
+        // Assume models are loaded and ready to render
         models.forEach(renderModel);
 
         requestAnimationFrame(render); // Continue the render loop

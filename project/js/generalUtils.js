@@ -17,13 +17,24 @@ function getWebGLContext() {
 }
 
 // ----------------- Loading Modal -----------------
+// Show the loading modal
 function showLoadingModal() {
-    document.getElementById('loadingModal').style.display = 'block';
+    const modal = document.getElementById('loadingModal');
+    modal.classList.remove('opacity-0'); // Ensure the modal is visible
+    modal.classList.add('opacity-75'); // Set opacity to make it semi-transparent
+    modal.style.visibility = 'visible'; // Ensure the modal is visible
 }
 
+// Hide the loading modal
 function hideLoadingModal() {
-    document.getElementById('loadingModal').style.display = 'none';
+    const modal = document.getElementById('loadingModal');
+    modal.classList.remove('opacity-75'); // Remove semi-transparent effect
+    modal.classList.add('opacity-0'); // Set opacity to 0 to hide the modal
+    setTimeout(() => {
+        modal.style.visibility = 'hidden'; // Ensure the modal is not clickable
+    }, 300); // Match this with your CSS transition duration
 }
+
 
 // ----------------- Hamburger Menu ----------------- 
 const menuToggle = document.getElementById('menuToggle');
