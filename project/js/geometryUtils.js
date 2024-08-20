@@ -138,7 +138,7 @@ function isWithinRoadBoundaries(position) {
         z : position[14]
     }
     return (
-        userPosition.x >= roadBoundaries.minX && userPosition.x <= roadBoundaries.maxX &&
+        userPosition.x >= roadBoundaries.minX+1 && userPosition.x <= roadBoundaries.maxX-1 &&
         userPosition.z >= roadBoundaries.minZ && userPosition.z <= roadBoundaries.maxZ
     );
 }
