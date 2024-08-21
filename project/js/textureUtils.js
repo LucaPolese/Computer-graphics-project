@@ -94,7 +94,18 @@ function generateTangents(position, texcoord, indices) {
 
 // ----------------- Normal Mapping -----------------
 let normalMappingEnabled = false;
+let transparencyEnabled = false;
 
 document.getElementById('normalMap').addEventListener('change', (event) => {
     normalMappingEnabled = event.target.checked;
+});
+
+document.getElementById('transparency').addEventListener('change', (event) => {
+    transparencyEnabled = event.target.checked;
+    if (transparencyEnabled) {
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    } else {
+        gl.disable(gl.BLEND);
+    }
 });

@@ -88,7 +88,10 @@ async function main() {
         function renderModel(model) {
             for (const { bufferInfo, material } of model.parts) {
                 webglUtils.setBuffersAndAttributes(gl, meshProgramInfo, bufferInfo);
-                webglUtils.setUniforms(meshProgramInfo, { u_world }, material);
+                webglUtils.setUniforms(meshProgramInfo, { 
+                    u_world,
+                    u_color: [material.diffuse[0], material.diffuse[1], material.diffuse[2], material.opacity]
+                }, material);
                 webglUtils.drawBufferInfo(gl, bufferInfo);
             }
         }
