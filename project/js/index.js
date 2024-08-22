@@ -1,6 +1,8 @@
 "use strict";
 let gl = getWebGLContext();
-let initialCameraPosition = m4.translation(0, 1, 7); // Initial camera position at Y = 1
+
+// Initialize the camera position 
+let initialCameraPosition = m4.translation(0, 1, 7); 
 let cameraPosition = m4.copy(initialCameraPosition);
 
 // Initialize the light direction with default values
@@ -8,10 +10,15 @@ let lightDirection = m4.normalize([0, 1, 0]);
 
 // Function to update the light direction based on slider values
 function updateLightDirection() {
-    const x = parseFloat(document.getElementById('lightX').value);
-    const y = parseFloat(document.getElementById('lightY').value);
-    const z = parseFloat(document.getElementById('lightZ').value);
+    const x = parseInt(document.getElementById('lightX').value);
+    const y = parseInt(document.getElementById('lightY').value);
+    const z = parseInt(document.getElementById('lightZ').value);
     lightDirection = m4.normalize([x, y, z]);
+
+    // Update the span elements with the current slider values
+    document.getElementById('lightXValue').textContent = x;
+    document.getElementById('lightYValue').textContent = y;
+    document.getElementById('lightZValue').textContent = z;
 }
 
 // Add event listeners to the sliders to update the light direction
@@ -73,7 +80,7 @@ async function main() {
             u_lightDirection: lightDirection,
             u_view: viewMatrix,
             u_projection: projection,
-            u_viewWorldPosition: initialCameraPosition,
+            u_viewWorldPosition: cameraPosition,
             u_normalMappingEnabled: normalMappingEnabled ? 1 : 0,
         };
 

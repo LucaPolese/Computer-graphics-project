@@ -153,6 +153,18 @@ function updateCameraPosition() {
     // Reset camera position if the 'r' key or the corresponding gamepad button is pressed
     if (keys['r'] || (gp && gp.buttons[0].pressed)) {
         m4.copy(initialCameraPosition, cameraPosition); // Reset camera
+    
+        // Update the sliders to reflect the initial light direction
+        document.getElementById('lightX').value = 0;
+        document.getElementById('lightY').value = 1;
+        document.getElementById('lightZ').value = 0;
+        
+        // Update the span elements with the initial light direction values
+        document.getElementById('lightXValue').textContent = 0;
+        document.getElementById('lightYValue').textContent = 1;
+        document.getElementById('lightZValue').textContent = 0;
+        
+        updateLightDirection();
         return; // Skip further processing this frame
     }
 

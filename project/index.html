@@ -42,14 +42,17 @@
 					<div class="flex items-center space-x-2">
 						<label for="lightX">X:</label>
 						<input id="lightX" type="range" min="-100" max="100" value="0" class="w-full p-2 border rounded" />
+						<span id="lightXValue">0</span>
 					</div>
 					<div class="flex items-center space-x-2">
 						<label for="lightY">Y:</label>
 						<input id="lightY" type="range" min="-100" max="100" value="1" class="w-full p-2 border rounded" />
+						<span id="lightYValue">1</span>
 					</div>
 					<div class="flex items-center space-x-2">
 						<label for="lightZ">Z:</label>
 						<input id="lightZ" type="range" min="-100" max="100" value="0" class="w-full p-2 border rounded" />
+						<span id="lightZValue">0</span>
 					</div>
 				</div>
 
@@ -103,6 +106,29 @@
 				</div>
 			</div>
 		</div>
+
+		<script id="color-vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 a_position;
+			
+			uniform mat4 u_projection;
+			uniform mat4 u_view;
+			uniform mat4 u_world;
+			
+			void main() {
+			  // Multiply the position by the matrices.
+			  gl_Position = u_projection * u_view * u_world * a_position;
+			}
+		</script>
+	
+		<script id="color-fragment-shader" type="x-shader/x-fragment">
+			precision mediump float;
+			
+			uniform vec4 u_color;
+			void main() {
+			  gl_FragColor = u_color;
+			}
+		</script>
+	
 
 		<script id="skybox-vertex-shader" type="x-shader/x-vertex">
 			attribute vec4 a_position;
