@@ -78,7 +78,6 @@ const fragmentShader = `
 // This helps ensure accurate calculations.
 precision highp float;
 
-
 // The normal vector interpolated across the surface of the polygon.
 varying vec3 v_normal;
 
@@ -96,7 +95,6 @@ varying vec2 v_texcoord;
 // The color interpolated across the surface of the polygon.
 // This color comes from the vertex shader and may be combined with the diffuse color.
 varying vec4 v_color;
-
 
 // The base color of the diffuse reflection of the material.
 uniform vec3 diffuse;
@@ -136,9 +134,9 @@ uniform vec3 u_lightDirection;
 // The ambient light color in the scene.
 uniform vec3 u_ambientLight;
 
-
-// A flag to enable or disable normal mapping.
+// A flag to enable or disable different types of mapping.
 uniform int u_normalMappingEnabled;
+uniform int u_specularMappingEnabled;
 
 // The main function, where the shader's computation begins for each fragment.
 void main () {
@@ -169,42 +167,35 @@ void main () {
         normal = normalize(tbn * normal);
     }
 
-    // Normalize the surface-to-view direction vector to ensure it has a length of 1. This vector points from the fragment to the camera.
-    vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-
-    // Calculate the half-vector between the light direction and the surface-to-view direction. The half-vector is used for the Blinn-Phong specular reflection model.
-    // https://learnopengl.com/Advanced-Lighting/Advanced-Lighting
-    vec3 halfVector = normalize(u_lightDirection + surfaceToViewDirection);
-
-
     // Calculate the diffuse lighting. The dot product between the light direction and the normal gives the intensity of the light.
     // This value is remapped from the range [-1, 1] to [0, 1] by multiplying by 0.5 and adding 0.5.
     float fakeLight = dot(u_lightDirection, normal) * 0.5 + 0.5;
 
-    // Calculate the specular lighting using the Blinn-Phong reflection model.
-    // The dot product between the normal and the half-vector gives the intensity of the specular highlight.
-    // This value is clamped to the range [0, 1].
-    float specularLight = clamp(dot(normal, halfVector), 0.0, 1.0);
+    // Declare the variables before the conditionals
+    vec3 effectiveDiffuse = diffuse * texture2D(diffuseMap, v_texcoord).rgb * v_color.rgb;
+    vec3 effectiveSpecular = vec3(0.0);
+    float effectiveOpacity = opacity * texture2D(diffuseMap, v_texcoord).a * v_color.a;
+    float specularLight = 0.0;
 
-    // Sample the specular map at the given texture coordinates to get the specular color.
-    // The specular map modulates the base specular color, allowing for variations across the surface.
-    vec4 specularMapColor = texture2D(specularMap, v_texcoord);
+    if(u_specularMappingEnabled == 1){
+        // Normalize the surface-to-view direction vector to ensure it has a length of 1. This vector points from the fragment to the camera.
+        vec3 surfaceToViewDirection = normalize(v_surfaceToView);
 
-    // Calculate the effective specular color by multiplying the base specular color with the specular map color.
-    vec3 effectiveSpecular = specular * specularMapColor.rgb;
+        // Calculate the half-vector between the light direction and the surface-to-view direction.
+        // https://learnopengl.com/Advanced-Lighting/Advanced-Lighting
+        vec3 halfVector = normalize(u_lightDirection + surfaceToViewDirection);
 
+        // Calculate the specular lighting. The dot product between the normal and the half-vector gives the intensity of the specular highlight.
+        // This value is clamped to the range [0, 1].
+        specularLight = clamp(dot(normal, halfVector), 0.0, 1.0);
 
-    // Sample the diffuse map at the given texture coordinates to get the diffuse color.
-    // The diffuse map modulates the base diffuse color, allowing for texture details.
-    vec4 diffuseMapColor = texture2D(diffuseMap, v_texcoord);
+        // Sample the specular map at the given texture coordinates to get the specular color.
+        // The specular map modulates the base specular color, allowing for variations across the surface.
+        vec4 specularMapColor = texture2D(specularMap, v_texcoord);
 
-    // Calculate the effective diffuse color by multiplying the base diffuse color with the diffuse map color and the vertex color.
-    // This combines the texture detail with the per-vertex color.
-    vec3 effectiveDiffuse = diffuse * diffuseMapColor.rgb * v_color.rgb;
-
-    // Calculate the effective opacity by multiplying the base opacity with the alpha from the diffuse map and the vertex color's alpha.
-    float effectiveOpacity = opacity * diffuseMapColor.a * v_color.a;
-
+        // Calculate the effective specular color by multiplying the base specular color with the specular map color.
+        effectiveSpecular = specular * specularMapColor.rgb;
+    }
 
     // Calculate the final fragment color (gl_FragColor).
     // The emissive color is added first, as it represents self-illumination and is independent of lighting.

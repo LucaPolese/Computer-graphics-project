@@ -41,7 +41,6 @@ async function main() {
     const assets = [
         './resources/assets/911/911.obj',
         './resources/assets/banner/Banner.obj',
-        './resources/assets/bus/Bus.obj',
         './resources/assets/firehydrant/FireHydrant.obj',
         './resources/assets/gasstation/GasStation.obj',
         './resources/assets/motel/Motel.obj',
@@ -49,7 +48,8 @@ async function main() {
         './resources/assets/road/Road.obj',
         './resources/assets/sign/Sign.obj',
         './resources/assets/transporter/Transporter.obj',
-        './resources/assets/tree/Trees.obj'
+        './resources/assets/tree/Trees.obj',
+        './resources/assets/bus/Bus.obj'
     ];
 
     // Simulate loading all models
@@ -82,6 +82,7 @@ async function main() {
             u_projection: projection,
             u_viewWorldPosition: cameraPosition,
             u_normalMappingEnabled: normalMappingEnabled ? 1 : 0,
+            u_specularMappingEnabled: reflectionsEnabled ? 1 : 0
         };
 
         gl.useProgram(meshProgramInfo.program);
