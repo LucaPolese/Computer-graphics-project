@@ -50,15 +50,17 @@ window.addEventListener('mousedown', (event) => {
     // Check if the click is on a slider
     if (event.target.tagName === 'INPUT' && event.target.type === 'range') {
         isInteractingWithSlider = true;
-    } else {
+    } else if (!isInteractingWithMenu) {
         isMouseDown = true;
         lastMouseX = event.clientX;
     }
 });
 
 window.addEventListener('mouseup', () => {
-    isMouseDown = false;
-    isInteractingWithSlider = false;
+    if (!isInteractingWithMenu){
+        isMouseDown = false;
+        isInteractingWithSlider = false;
+    }
 });
 
 window.addEventListener('mousemove', (event) => {
@@ -75,8 +77,8 @@ window.addEventListener('mousemove', (event) => {
 
 // ----------------- Wheel Zooming Listener -----------------
 window.addEventListener('wheel', (event) => {
-    // Only zoom if not interacting with a slider
-    if (!isInteractingWithSlider) {
+    // Only zoom if not interacting with a slider and menu
+    if (!isInteractingWithMenu && !isInteractingWithSlider) {
         const zoomDirection = event.deltaY > 0 ? 1 : -1;
         const zoomAmount = zoomSpeed * zoomDirection;
 

@@ -41,12 +41,16 @@ const menuToggle = document.getElementById('menuToggle');
 const menu = document.getElementById('menu');
 const menuClose = document.getElementById('menuClose');
 
+let isInteractingWithMenu = false; // Track if the user is scrolling the menu
+
 menuToggle.addEventListener('click', () => {
     menu.classList.toggle('translate-x-full');
+    isInteractingWithMenu = true;
 });
 
 menuClose.addEventListener('click', () => {
     menu.classList.add('translate-x-full');
+    isInteractingWithMenu = false;
 });
 
 // ----------- Drop-down menu for controls -----------
