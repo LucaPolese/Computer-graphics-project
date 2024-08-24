@@ -10,5 +10,4 @@ illum 2
 map_Kd motel_1_01_BaseColor.jpg
 map_Ns motel_1_01_Roughness.png
 map_refl motel_1_01_Metallic.png
-map_Ke motel_1_01_Emission.png
 map_Bump motel_1_01_Normal.png

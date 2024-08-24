@@ -72,7 +72,4 @@ document.getElementById("controlsHeader").addEventListener("click", function() {
             controlsContent.classList.add("hidden");
         }, 10); // Matches the duration of the transition
     }
-    
-    // Hide the message when the content is visible
-    controlsMessage.classList.toggle("hidden");
 });

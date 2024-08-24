@@ -13,3 +13,4 @@ illum 2
 map_Kd bus_ScaniaL94UB_albedo_opacity.png
 map_d bus_ScaniaL94UB_ambient_occlusion.png
 map_Bump bus_ScaniaL94UB_normal.png
+map_refl bus_ScaniaL94UB_specular.tga.png
