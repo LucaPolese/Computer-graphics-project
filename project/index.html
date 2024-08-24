@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Computer graphics project</title>
+		<title>A glimpse of city</title>
 		<link rel="stylesheet" href="index.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 		<script src="https://cdn.tailwindcss.com"></script>
@@ -29,14 +29,17 @@
 		</div>
 
 		<!-- Lateral Menu -->
-		<div id="menu" class="fixed top-0 right-0 w-96 h-full bg-white shadow-lg z-40 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+		<div id="menu" class="fixed top-0 right-0 w-96 h-full bg-white shadow-lg z-40 transform translate-x-full transition-transform duration-300 overflow-hidden flex flex-col">
+			<!-- Header -->
 			<div class="p-4 flex justify-between items-center bg-gray-800 text-white">
 				<h2 class="text-lg font-bold">Settings</h2>
 				<button id="menuClose" class="text-white">
 					<i class="fas fa-times"></i>
 				</button>
 			</div>
-			<div class="p-4">
+		
+			<!-- Main Content - Scrollable Area -->
+			<div class="p-4 flex-1 overflow-y-auto">
 				<h3 class="font-bold">Light Position</h3>
 				<div class="flex flex-col space-y-2">
 					<div class="flex items-center space-x-2">
@@ -62,75 +65,77 @@
 					<label><input id="transparency" type="checkbox" class="mr-2" /> Transparency</label>
 					<label><input id="reflections" type="checkbox" class="mr-2" /> Reflections</label>
 				</div>
-			</div>
 		
-			<div class="bg-gray-800 text-white p-4 shadow-md space-y-4 relative">
-				<h2 id="controlsHeader" class="text-lg font-bold text-left cursor-pointer flex justify-between items-center">
-					<span>Controls</span>
-					<i class="fas fa-chevron-down"></i>
-				</h2>
-				
-				<div id="controlsContent" class="space-y-2 hidden opacity-0 transition-opacity duration-500 ease-in-out">
-					<!-- Existing controls content -->
-					<h3 class="text-xl font-bold mt-4">Keyboard</h3>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-solid fa-w text-lg"></i>
-						<p> to move forward</p>
-					</div>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-solid fa-a text-lg"></i>
-						<p> to move left</p>
-					</div>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-solid fa-s text-lg"></i>
-						<p> to move backward</p>
-					</div>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-solid fa-d text-lg"></i>
-						<p> to move right</p>
-					</div>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-arrow-left text-lg"></i>
-						<p> to rotate the camera to the left</p>
-					</div>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-arrow-right text-lg"></i>
-						<p> to rotate the camera to the right</p>
-					</div>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-solid fa-r text-lg"></i>
-						<p> to reset lights and user's position</p>
-					</div>
-					<h3 class="text-xl font-bold mt-4">Mouse</h3>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-solid fa-computer-mouse text-lg"></i>
-						<p><strong>Mouse Wheel</strong> to zoom in/out</p>
-					</div>
-					<div class="flex items-center space-x-2">
-						<i class="fas fa-mouse-pointer text-lg"></i>
-						<p><strong>Click and Drag</strong> with the mouse to rotate the camera</p>
-					</div>
-					<h3 class="text-xl font-bold mt-4">Gamepad</h3>
-					<div class="space-y-2">
+				<!-- Drop-down Content -->
+				<div class="bg-gray-800 text-white p-4 shadow-md space-y-4 mt-4 relative">
+					<h2 id="controlsHeader" class="text-lg font-bold text-left cursor-pointer flex justify-between items-center">
+						<span>Controls</span>
+						<i class="fas fa-chevron-down"></i>
+					</h2>
+		
+					<div id="controlsContent" class="space-y-2 hidden opacity-0 transition-opacity duration-500 ease-in-out">
+						<h3 class="text-xl font-bold mt-4">Keyboard</h3>
 						<div class="flex items-center space-x-2">
-							<i class="fas fa-gamepad text-lg"></i>
-							<p><strong>Left Stick</strong> to move the character</p>
+							<i class="fas fa-solid fa-w text-lg"></i>
+							<p> to move forward</p>
 						</div>
 						<div class="flex items-center space-x-2">
-							<i class="fas fa-gamepad text-lg"></i>
-							<p><strong>Right Stick</strong> to rotate the camera</p>
+							<i class="fas fa-solid fa-a text-lg"></i>
+							<p> to move left</p>
 						</div>
 						<div class="flex items-center space-x-2">
-							<i class="fa-regular fa-circle-xmark"></i>
+							<i class="fas fa-solid fa-s text-lg"></i>
+							<p> to move backward</p>
+						</div>
+						<div class="flex items-center space-x-2">
+							<i class="fas fa-solid fa-d text-lg"></i>
+							<p> to move right</p>
+						</div>
+						<div class="flex items-center space-x-2">
+							<i class="fas fa-arrow-left text-lg"></i>
+							<p> to rotate the camera to the left</p>
+						</div>
+						<div class="flex items-center space-x-2">
+							<i class="fas fa-arrow-right text-lg"></i>
+							<p> to rotate the camera to the right</p>
+						</div>
+						<div class="flex items-center space-x-2">
+							<i class="fas fa-solid fa-r text-lg"></i>
 							<p> to reset lights and user's position</p>
+						</div>
+						<h3 class="text-xl font-bold mt-4">Mouse</h3>
+						<div class="flex items-center space-x-2">
+							<i class="fas fa-solid fa-computer-mouse text-lg"></i>
+							<p><strong>Mouse Wheel</strong> to zoom in/out</p>
+						</div>
+						<div class="flex items-center space-x-2">
+							<i class="fas fa-mouse-pointer text-lg"></i>
+							<p><strong>Click and Drag</strong> with the mouse to rotate the camera</p>
+						</div>
+						<h3 class="text-xl font-bold mt-4">Gamepad</h3>
+						<div class="space-y-2">
+							<div class="flex items-center space-x-2">
+								<i class="fas fa-gamepad text-lg"></i>
+								<p><strong>Left Stick</strong> to move the character</p>
+							</div>
+							<div class="flex items-center space-x-2">
+								<i class="fas fa-gamepad text-lg"></i>
+								<p><strong>Right Stick</strong> to rotate the camera</p>
+							</div>
+							<div class="flex items-center space-x-2">
+								<i class="fa-regular fa-circle-xmark"></i>
+								<p> to reset lights and user's position</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div id="controlsMessage" class="text-center text-gray-500 mt-2">
-				<p>Click on the drop-down menu to view controls.</p>
-			</div>
-		</div>
+		
+			<!-- Footer with Documentation Link - Fixed to the Bottom -->
+			<footer class="p-4 bg-white border-t border-gray-200 mt-auto">
+				<a href="../doc/index.html" class="text-blue-600 hover:underline">Project Documentation</a>
+			</footer>
+		</div>		
 
 		<!-- Reload Button -->
 		<div class="absolute top-4 left-4 lg:hidden">
