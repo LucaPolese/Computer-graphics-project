@@ -56,8 +56,7 @@ menuClose.addEventListener('click', () => {
 // ----------- Drop-down menu for controls -----------
 document.getElementById("controlsHeader").addEventListener("click", function() {
     var controlsContent = document.getElementById("controlsContent");
-    var controlsMessage = document.getElementById("controlsMessage");
-
+    
     // Toggle visibility of the controls content
     if (controlsContent.classList.contains("hidden")) {
         controlsContent.classList.remove("hidden");
@@ -72,4 +71,19 @@ document.getElementById("controlsHeader").addEventListener("click", function() {
             controlsContent.classList.add("hidden");
         }, 10); // Matches the duration of the transition
     }
+});
+
+// ----------------- Mobile Listeners -----------------
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('touchstart', function(e) {
+        e.preventDefault(); // Prevents default behavior like zooming and text selection
+        // Trigger the action associated with the button
+        // Example: start moving character
+    });
+
+    button.addEventListener('touchend', function(e) {
+        e.preventDefault(); // Prevents default behavior like zooming and text selection
+        // Stop the action associated with the button
+        // Example: stop moving character
+    });
 });

@@ -11,3 +11,19 @@ body {
     width: 100vw;
     height: 100vh;
 }
+
+/*Prevent Text Selection and Highlighting*/
+button {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome and Opera */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Prevent highlight on tap */
+}
+
+/*Prevent Double-Tap Zoom*/
+html, body { 
+    touch-action: manipulation;
+    -webkit-touch-callout: none; /* Prevent callout to copy image, etc when tapping and holding on an element */
+    -webkit-user-select: none;   /* Prevent user from selecting text */
+}
