@@ -74,16 +74,24 @@ document.getElementById("controlsHeader").addEventListener("click", function() {
 });
 
 // ----------------- Mobile Listeners -----------------
+// ----------------- Mobile Listeners -----------------
 document.querySelectorAll('button').forEach(button => {
     button.addEventListener('touchstart', function(e) {
-        e.preventDefault(); // Prevents default behavior like zooming and text selection
+        // Check if the event is cancelable before preventing default
+        if (e.cancelable) {
+            e.preventDefault(); // Prevents default behavior like zooming and text selection
+        }
         // Trigger the action associated with the button
         // Example: start moving character
     });
 
     button.addEventListener('touchend', function(e) {
-        e.preventDefault(); // Prevents default behavior like zooming and text selection
+        // Check if the event is cancelable before preventing default
+        if (e.cancelable) {
+            e.preventDefault(); // Prevents default behavior like zooming and text selection
+        }
         // Stop the action associated with the button
         // Example: stop moving character
     });
 });
+
