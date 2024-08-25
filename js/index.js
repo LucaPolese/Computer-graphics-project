@@ -82,7 +82,11 @@ async function main() {
             u_projection: projection,
             u_viewWorldPosition: cameraPosition,
             u_normalMappingEnabled: normalMappingEnabled ? 1 : 0,
-            u_specularMappingEnabled: reflectionsEnabled ? 1 : 0
+            u_specularMappingEnabled: reflectionsEnabled ? 1 : 0,
+            diffuse: [1.0, 1.0, 1.0],
+            ambient: [1.0, 1.0, 1.0],
+            emissive: [1.0, 1.0, 1.0],
+            specular: [1.0, 1.0, 1.0],
         };
 
         gl.useProgram(meshProgramInfo.program);

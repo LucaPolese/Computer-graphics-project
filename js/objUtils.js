@@ -241,6 +241,32 @@ function setUpDefaultTexture(gl) {
     };
 }
 
+function getExtents(positions) {
+    const min = positions.slice(0, 3);
+    const max = positions.slice(0, 3);
+    for (let i = 3; i < positions.length; i += 3) {
+      for (let j = 0; j < 3; ++j) {
+        const v = positions[i + j];
+        min[j] = Math.min(v, min[j]);
+        max[j] = Math.max(v, max[j]);
+      }
+    }
+    return {min, max};
+}
+  
+function getGeometriesExtents(geometries) {
+    return geometries.reduce(({min, max}, {data}) => {
+      const minMax = getExtents(data.position);
+      return {
+        min: min.map((min, ndx) => Math.min(minMax.min[ndx], min)),
+        max: max.map((max, ndx) => Math.max(minMax.max[ndx], max)),
+      };
+    }, {
+      min: Array(3).fill(Number.POSITIVE_INFINITY),
+      max: Array(3).fill(Number.NEGATIVE_INFINITY),
+    });
+}
+
 async function loadObj(gl, objHref) {
     const response = await fetch(objHref);
     const text = await response.text();
@@ -325,5 +351,15 @@ async function loadObj(gl, objHref) {
             bufferInfo,
         };
     });
-    return {parts};
+
+    const extents = getGeometriesExtents(obj.geometries);
+    const range = m4.subtractVectors(extents.max, extents.min);
+    // amount to move the object so its center is at the origin
+    const objOffset = m4.scaleVector(
+        m4.addVectors(
+            extents.min,
+            m4.scaleVector(range, 0.5)),
+        -1);
+
+    return {parts, objOffset}
 }
