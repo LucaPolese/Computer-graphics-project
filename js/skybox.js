@@ -1,11 +1,13 @@
 "use strict";
 
 function main() {
-
-    var gl = getWebGLContext();
-    if (!gl) { 
-        return;
-    }
+  // Obtain a WebGL context
+  /** @type {HTMLCanvasElement} */
+  var canvas = document.querySelector("#canvas");
+  var gl = canvas.getContext("webgl");
+  if (!gl) {
+    return;
+  }
 
     // Initialize GLSL program
     var program = webglUtils.createProgramFromScripts(gl, ["skybox-vertex-shader", "skybox-fragment-shader"]);
@@ -56,8 +58,8 @@ function main() {
         },
     ];
 
-    faceInfos.forEach((faceInfo) => {
-        const { target, url } = faceInfo;
+        faceInfos.forEach((faceInfo) => {
+        const {target, url} = faceInfo;
 
         // Upload the canvas to the respective cubemap face
         const level = 0;
@@ -73,29 +75,37 @@ function main() {
         // Load an image asynchronously
         const image = new Image();
         image.src = url;
-        image.addEventListener('load', function () {
-            // Copy the loaded image to the texture
-            gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
-            gl.texImage2D(target, level, internalFormat, format, type, image);
-            gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+        image.addEventListener('load', function() {
+        // Copy the loaded image to the texture
+        gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+        gl.texImage2D(target, level, internalFormat, format, type, image);
+        gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
         });
     });
     gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
 
+    function degToRad(d) {
+        return d * Math.PI / 180;
+    }
+
     var fieldOfViewRadians = degToRad(60);
+    var cameraYRotationRadians = degToRad(0);
+
+    var spinCamera = true;
+    // Capture the initial time
     var then = 0;
 
     requestAnimationFrame(drawScene);
 
     // Render the scene
     function drawScene(time) {
-        // convert to seconds
+        // Convert time to seconds
         time *= 0.001;
-        // Subtract the previous time from the current time
+        // Compute the time difference from the last frame
         var deltaTime = time - then;
-        // Remember the current time for the next frame.
-        then = time;    
+        // Store the current time for the next frame
+        then = time;
 
         webglUtils.resizeCanvasToDisplaySize(gl.canvas);
 
@@ -132,11 +142,10 @@ function main() {
             m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
 
         // Set the camera position to circle 2 units from origin, looking at the origin
-        var skyboxCameraPosition = cameraPosition
         var target = [0, 0, 0];
         var up = [0, 1, 0];
         // Compute the camera's matrix using lookAt
-        var cameraMatrix = m4.lookAt(skyboxCameraPosition, target, up);
+        var cameraMatrix = m4.lookAt(cameraPosition, target, up);
 
         // Derive a view matrix from the camera matrix
         var viewMatrix = m4.inverse(cameraMatrix);
@@ -173,15 +182,14 @@ function main() {
 function setGeometry(gl) {
     var positions = new Float32Array(
         [
-            -1, -1,
-            1, -1,
-            -1, 1,
-            -1, 1,
-            1, -1,
-            1, 1,
+        -1, -1,
+        1, -1,
+        -1,  1,
+        -1,  1,
+        1, -1,
+        1,  1,
         ]);
     gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 }
 
 main();
-
