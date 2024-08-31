@@ -1,145 +1,182 @@
 // Function to check if a value is a power of 2.
-// This is useful for determining if textures can use mipmaps and specific wrapping modes.
+// This is crucial because WebGL requires textures to be power-of-2 dimensions 
+// if you want to use certain features like mipmaps or specific wrapping modes (REPEAT or MIRRORED_REPEAT).
 function isPowerOf2(value) {
-    return (value & (value - 1)) === 0;
+    return (value & (value - 1)) === 0; // A number is a power of 2 if its binary representation contains exactly one '1'.
 }
 
-// Function to create a 1x1 pixel texture. This is useful for creating a placeholder texture
-// that can be replaced later when the actual image has loaded.
+// Function to create a 1x1 pixel texture. This is useful as a placeholder 
+// while the actual texture is loading or when a texture isn't strictly necessary.
 function create1PixelTexture(gl, pixel) {
-    const texture = gl.createTexture();  // Create a new texture object.
-    gl.bindTexture(gl.TEXTURE_2D, texture);  // Bind the texture so we can perform operations on it.
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-        new Uint8Array(pixel));  // Define the texture as a 1x1 pixel image with the provided color.
+    const texture = gl.createTexture();  // Create a new WebGL texture object.
+    gl.bindTexture(gl.TEXTURE_2D, texture);  // Bind the texture to the TEXTURE_2D target for further operations.
+    
+    // Define a 1x1 pixel texture with the provided RGBA color (from the 'pixel' array).
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(pixel));  
+    
     return texture;  // Return the created texture object.
 }
 
-// Function to create a texture from an image URL. This function handles both synchronous 
-// placeholder texture creation and asynchronous image loading.
+// Function to create a texture from an image URL. Handles both the creation of a placeholder 
+// and the asynchronous loading and application of the actual image.
 function createTexture(gl, url) {
-    // Start with a 1x1 blue pixel texture as a placeholder.
+    // Initially, create a 1x1 texture filled with a default color (light blue) as a placeholder.
     const texture = create1PixelTexture(gl, [128, 192, 255, 255]);
 
-    // Create an image object to load the actual image.
+    // Create a new Image object to load the actual texture image.
     const image = new Image();
-    image.src = url;  // Set the source of the image to the provided URL.
+    image.src = url;  // Set the image source to the provided URL.
     
-    // Once the image has loaded, copy it to the WebGL texture.
+    // Set up an event listener that triggers when the image has fully loaded.
     image.addEventListener('load', function () {
-        gl.bindTexture(gl.TEXTURE_2D, texture);  // Bind the texture so we can perform operations on it.
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);  // Flip the image's Y-axis to match WebGL's coordinate system.
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);  // Upload the image to the texture.
+        // Bind the texture again, as operations will be performed on it.
+        gl.bindTexture(gl.TEXTURE_2D, texture);  
+        
+        // Flip the Y-axis of the image data so that it matches WebGL's coordinate system.
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);  
+        
+        // Upload the image data to the texture.
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);  
 
-        // Check if the image dimensions are powers of 2.
+        // Check if the image dimensions are powers of 2, which is required for certain WebGL features.
         if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
-            // If both dimensions are powers of 2, generate mipmaps for efficient texture scaling.
+            // If the dimensions are powers of 2, generate mipmaps for more efficient texture scaling.
             gl.generateMipmap(gl.TEXTURE_2D);
         } else {
-            // If not, disable mipmaps and set the wrapping mode to clamp to edge.
-            // This is necessary because non-power-of-2 textures have more restrictions.
+            // If not, set the texture's wrapping to CLAMP_TO_EDGE and use LINEAR filtering.
+            // This is because non-power-of-2 textures cannot use mipmaps or REPEAT wrapping mode.
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
         }
     });
 
-    // Return the texture object (initially a 1x1 texture, but later replaced with the loaded image).
+    // Return the texture object, initially as a 1x1 texture, but it will be updated once the image loads.
     return texture;
 }
 
 // Utility function to create an iterator for indexed geometry.
-// This allows us to iterate through index buffers, which is useful for rendering and computing tangents.
+// An index buffer allows for the re-use of vertices by storing references instead of duplicating data.
+// This function creates an iterator that goes through these indices.
 function makeIndexIterator(indices) {
-    let ndx = 0;
-    const fn = () => indices[ndx++];  // Function to return the current index and increment.
-    fn.reset = () => { ndx = 0; };  // Reset the iterator to start from the beginning.
-    fn.numElements = indices.length;  // Store the total number of indices.
-    return fn;
+    let ndx = 0;  // Initialize the index to start at the first element.
+    
+    // Function that returns the current index value and then increments the index.
+    const fn = () => indices[ndx++];  
+    
+    // Method to reset the iterator back to the start of the index buffer.
+    fn.reset = () => { ndx = 0; };  
+    
+    // Store the total number of elements (indices) in the index buffer.
+    fn.numElements = indices.length;  
+    
+    return fn;  // Return the iterator function.
 }
 
 // Utility function to create an iterator for unindexed geometry.
-// This is useful for iterating over vertices directly when no index buffer is used.
+// For geometry that doesn't use an index buffer, this function provides a way to iterate through vertex positions directly.
 function makeUnindexedIterator(positions) {
-    let ndx = 0;
-    const fn = () => ndx++;  // Function to return the current vertex index and increment.
-    fn.reset = () => { ndx = 0; };  // Reset the iterator to start from the beginning.
-    fn.numElements = positions.length / 3;  // Store the total number of vertices.
-    return fn;
+    let ndx = 0;  // Initialize the index to start at the first vertex.
+    
+    // Function that returns the current vertex index and then increments it.
+    const fn = () => ndx++;  
+    
+    // Method to reset the iterator back to the start.
+    fn.reset = () => { ndx = 0; };  
+    
+    // Store the total number of vertices, calculated by dividing the total number of position components by 3 (x, y, z).
+    fn.numElements = positions.length / 3;  
+    
+    return fn;  // Return the iterator function.
 }
 
-// Subtracts two 2D vectors. This is used to calculate the difference between texture coordinates.
+// Function to subtract two 2D vectors. This is often used in texture coordinate calculations, 
+// such as when determining how much to move in texture space between vertices.
 const subtractVector2 = (a, b) => a.map((v, ndx) => v - b[ndx]);
 
-// Function to generate tangent vectors for normal mapping.
-// Tangents are required for normal mapping to correctly interpret the normal map textures.
+// Function to generate tangent vectors needed for normal mapping.
+// Tangent vectors are crucial for correctly applying normal maps, which provide detailed surface lighting effects.
 function generateTangents(position, texcoord, indices) {
-    // Choose the appropriate iterator based on whether indices are provided.
+    // Determine whether to use an indexed iterator or an unindexed one, depending on whether 'indices' is provided.
     const getNextIndex = indices ? makeIndexIterator(indices) : makeUnindexedIterator(position);
+    
+    // Calculate the total number of faces (triangles) based on the number of elements.
     const numFaceVerts = getNextIndex.numElements;
-    const numFaces = numFaceVerts / 3;  // Calculate the number of faces (triangles).
+    const numFaces = numFaceVerts / 3;
 
-    const tangents = [];  // Array to hold the computed tangent vectors.
+    const tangents = [];  // Initialize an array to store the calculated tangent vectors.
+
+    // Iterate over each face (triangle) to calculate tangents.
     for (let i = 0; i < numFaces; ++i) {
-        const n1 = getNextIndex();  // Get the vertex index for the first vertex of the triangle.
-        const n2 = getNextIndex();  // Get the vertex index for the second vertex of the triangle.
-        const n3 = getNextIndex();  // Get the vertex index for the third vertex of the triangle.
+        // Get the indices of the three vertices that make up this triangle.
+        const n1 = getNextIndex();  
+        const n2 = getNextIndex();  
+        const n3 = getNextIndex();  
 
-        // Get the positions of the three vertices that make up the triangle.
+        // Extract the positions of the three vertices.
         const p1 = position.slice(n1 * 3, n1 * 3 + 3);
         const p2 = position.slice(n2 * 3, n2 * 3 + 3);
         const p3 = position.slice(n3 * 3, n3 * 3 + 3);
 
-        // Get the texture coordinates of the three vertices.
+        // Extract the texture coordinates of the three vertices.
         const uv1 = texcoord.slice(n1 * 2, n1 * 2 + 2);
         const uv2 = texcoord.slice(n2 * 2, n2 * 2 + 2);
         const uv3 = texcoord.slice(n3 * 2, n3 * 2 + 2);
 
-        // Compute the edge vectors of the triangle in 3D space.
+        // Calculate the vectors representing the edges of the triangle in 3D space.
         const dp12 = m4.subtractVectors(p2, p1);
         const dp13 = m4.subtractVectors(p3, p1);
 
-        // Compute the difference in texture coordinates.
+        // Calculate the difference in texture coordinates along those edges.
         const duv12 = subtractVector2(uv2, uv1);
         const duv13 = subtractVector2(uv3, uv1);
 
-        // Compute the tangent vector using the formula based on texture coordinates and positions.
+        // Calculate the tangent vector using a formula that combines the position and texture coordinate differences.
+        // This formula derives from the partial derivatives of the texture mapping.
         const f = 1.0 / (duv12[0] * duv13[1] - duv13[0] * duv12[1]);
+        
+        // If the calculation is valid, compute the tangent vector.
         const tangent = Number.isFinite(f)
             ? m4.normalize(m4.scaleVector(m4.subtractVectors(
                 m4.scaleVector(dp12, duv13[1]),
                 m4.scaleVector(dp13, duv12[1]),
             ), f))
-            : [1, 0, 0];  // If the tangent calculation fails, use a default tangent.
+            : [1, 0, 0];  // If the calculation fails, use a default tangent vector [1, 0, 0].
 
-        // Store the tangent for all three vertices of the triangle.
+        // Store the same tangent vector for all three vertices of the triangle.
         tangents.push(...tangent, ...tangent, ...tangent);
     }
 
-    return tangents;  // Return the array of computed tangents.
+    return tangents;  // Return the array of calculated tangent vectors.
 }
 
 // ----------------- Normal Mapping -----------------
 // Boolean flag to track whether normal mapping is enabled.
 let normalMappingEnabled = false;
 
-// Event listener for enabling/disabling normal mapping based on a checkbox.
+// Event listener for enabling/disabling normal mapping based on a checkbox input.
+// This updates the 'normalMappingEnabled' flag to control whether the normal map is applied during rendering.
 document.getElementById('normalMap').addEventListener('change', (event) => {
-    normalMappingEnabled = event.target.checked;
+    normalMappingEnabled = event.target.checked;  // Update the flag based on the checkbox state.
 });
 
 // ----------------- Transparency -------------------
 // Boolean flag to track whether transparency is enabled.
 let transparencyEnabled = false;
 
-// Event listener for enabling/disabling transparency based on a checkbox.
+// Event listener for enabling/disabling transparency based on a checkbox input.
+// This updates the 'transparencyEnabled' flag and configures WebGL's blending settings accordingly.
 document.getElementById('transparency').addEventListener('change', (event) => {
-    transparencyEnabled = event.target.checked;
+    transparencyEnabled = event.target.checked;  // Update the flag based on the checkbox state.
+    
     if (transparencyEnabled) {
         // If transparency is enabled, enable blending and set the blend function.
+        // This blend function combines the source color (from the fragment shader) with the destination color 
+        // (from the framebuffer) using the source alpha value.
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     } else {
-        // If transparency is disabled, disable blending.
+        // If transparency is disabled, turn off blending.
         gl.disable(gl.BLEND);
     }
 });
@@ -148,7 +185,8 @@ document.getElementById('transparency').addEventListener('change', (event) => {
 // Boolean flag to track whether reflections are enabled.
 let reflectionsEnabled = false;
 
-// Event listener for enabling/disabling reflections based on a checkbox.
+// Event listener for enabling/disabling reflections based on a checkbox input.
+// This updates the 'reflectionsEnabled' flag to control whether reflection effects are applied during rendering.
 document.getElementById('reflections').addEventListener('change', (event) => {
-    reflectionsEnabled = event.target.checked;
+    reflectionsEnabled = event.target.checked;  // Update the flag based on the checkbox state.
 });
