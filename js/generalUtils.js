@@ -67,19 +67,33 @@ const menuClose = document.getElementById('menuClose'); // Get the menu close bu
 let isInteractingWithMenu = false; // Track whether the user is interacting with the menu (e.g., scrolling).
 
 /**
- * Toggle the visibility of the menu when the menu toggle button is clicked.
+ * Toggle the visibility of the menu when the menu toggle button is clicked or touched.
  */
-menuToggle.addEventListener('click', () => {
+function toggleMenu() {
     menu.classList.toggle('translate-x-full'); // Toggle the menu's position with the 'translate-x-full' class.
-    isInteractingWithMenu = true; // Set the flag to indicate user interaction with the menu.
+    isInteractingWithMenu = !isInteractingWithMenu; // Toggle the interaction flag.
+}
+
+// Add both click and touchstart event listeners for better mobile support
+menuToggle.addEventListener('click', toggleMenu);
+menuToggle.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevent the default behavior on touchstart to ensure the menu toggles correctly
+    toggleMenu();
 });
 
 /**
- * Hide the menu when the menu close button is clicked.
+ * Hide the menu when the menu close button is clicked or touched.
  */
-menuClose.addEventListener('click', () => {
+function closeMenu() {
     menu.classList.add('translate-x-full'); // Add the class to hide the menu.
     isInteractingWithMenu = false; // Reset the interaction flag.
+}
+
+// Add both click and touchstart event listeners for the close button as well
+menuClose.addEventListener('click', closeMenu);
+menuClose.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevent the default behavior on touchstart to ensure the menu closes correctly
+    closeMenu();
 });
 
 // ----------- Drop-down menu for controls ----------- 
