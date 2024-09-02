@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Documentazione progetto - A glimpse of city</title>
+		<!-- Tailwind CSS CDN -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+
+	<body class="bg-gray-100 text-gray-900">
+		<header class="bg-gray-900 text-white p-4 w-full z-50 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center max-w-screen-lg">
+                <h1 class="text-3xl font-semibold">A glimpse of city</h1>
+                <!-- Visibile solo su schermi medi e più grandi -->
+                <a href="../index.html" class="hidden md:block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                    <i class="fas fa-bars fa-2x"></i>
+                </button>
+            </div>
+
+            <nav class="md:hidden absolute top-16 right-0 w-48 bg-gray-800 rounded-lg mt-2 hidden" id="nav-menu">
+                <ul class="flex flex-col space-y-2 py-4 px-6">
+                    <li><a href="#overview" class="hover:text-gray-300">Panoramica</a></li>
+                    <li><a href="#functions" class="hover:text-gray-300">Funzioni</a></li>
+                    <li><a href="#notes" class="hover:text-gray-300">Note</a></li>
+                </ul>
+            </nav>
+        </header>
+
+    <!-- Contenuto Principale -->
+        <main class="flex">
+            <!-- Sidebar -->
+            <aside class="sidebar bg-white p-6 border-r border-gray-300 hidden md:block sticky top-0 h-screen overflow-y-auto w-64">
+                <h2 class="text-xl font-semibold mb-4">Indice</h2>
+                <ul class="space-y-3">
+                    <li><a href="#overview" class="text-blue-500 hover:underline">Panoramica</a></li>
+                    <li><a href="#functions" class="text-blue-500 hover:underline">Funzioni</a></li>
+                    <li><a href="#notes" class="text-blue-500 hover:underline">Note</a></li>
+                </ul>
+            </aside>
+
+            <!-- Area di Contenuto -->
+            <section class="content flex-1 p-8 bg-gray-50">
+                <div class="flex justify-end">
+                    <!-- Visibile solo su schermi piccoli -->
+                    <a href="../index.html" class="block md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                </div>
+                <section id="overview" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Panoramica</h2>
+                    <p>Questo script JavaScript rappresenta una raccolta di funzioni e gestori di eventi progettati per migliorare l'interattività e la funzionalità dell'interfaccia grafica. Come anticipa il titolo, questo file contiene funzioni ad uso <b>generico</b> (come gestione di eventi generati dai bottoni oppure funzioni per la visualizzazione di modali di caricamento) e di funzioni che vengono utilizzate in molteplici file (e.g. <code>degToRad</code>)</p>
+                </section>
+
+                <section id="functions" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Funzioni</h2>
+                    
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">degToRad(deg)</h3>
+                        <p><strong>Descrizione:</strong> Questa funzione converte un angolo espresso in gradi in un angolo equivalente espresso in radianti.</p>
+                        <p><strong>Funzionamento:</strong> La funzione riceve un valore angolare in gradi e lo converte in radianti moltiplicandolo per π/180.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>deg (number):</code> L'angolo in gradi da convertire.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>number:</code> L'angolo convertito in radianti.</li>
+                        </ul>
+                    </div>
+                        
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">radToDeg(r)</h3>
+                        <p><strong>Descrizione:</strong> Questa funzione converte un angolo espresso in radianti in un angolo equivalente espresso in gradi.</p>
+                        <p><strong>Funzionamento:</strong> La funzione riceve un valore angolare in radianti e lo converte in gradi moltiplicandolo per 180/π.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>r (number):</code> L'angolo in radianti da convertire.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>number:</code> L'angolo convertito in gradi.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">getWebGLContext()</h3>
+                        <p><strong>Descrizione:</strong> Questa funzione tenta di ottenere il contesto di rendering WebGL da un elemento <code>&lt;canvas&gt;</code> presente nella pagina.</p>
+                        <p><strong>Funzionamento:</strong> La funzione seleziona il primo elemento <code>&lt;canvas&gt;</code> nella pagina e tenta di ottenere il contesto di rendering WebGL tramite il metodo <code>getContext('webgl')</code>. Se non riesce a ottenere il contesto (ad esempio, se WebGL non è supportato dal browser), ritorna <code>null</code>.</p>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>WebGLRenderingContext|null:</code> Il contesto WebGL ottenuto o <code>null</code> se il contesto non può essere creato.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">showLoadingModal()</h3>
+                        <p><strong>Descrizione:</strong> Questa funzione mostra la modale di caricamento, rendendola visibile e semi-trasparente.</p>
+                        <p><strong>Funzionamento:</strong> La funzione seleziona l'elemento della modale tramite il suo ID (<code>loadingModal</code>), rimuove la classe che la rende invisibile (<code>opacity-0</code>) e aggiunge la classe che la rende semi-trasparente (<code>opacity-75</code>). Infine, imposta la visibilità della modale su <code>visible</code>.</p>
+                    </div>
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">hideLoadingModal()</h3>
+                        <p><strong>Descrizione:</strong> Questa funzione nasconde la modale di caricamento, rendendola invisibile e completamente trasparente.</p>
+                        <p><strong>Funzionamento:</strong> La funzione seleziona l'elemento della modale tramite il suo ID (<code>loadingModal</code>), rimuove la classe che la rende semi-trasparente (<code>opacity-75</code>) e aggiunge la classe che la rende completamente trasparente (<code>opacity-0</code>). Imposta la visibilità della modale su <code>hidden</code> per assicurarsi che non sia cliccabile.</p>
+                    </div>
+                </section>
+
+                <section id="events" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Gestione eventi</h2>
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">Menu Hamburger</h3>
+                        <p><strong>Event Listener per il pulsante di toggle del menu</strong></p>
+                        <p><strong>Descrizione:</strong> Questo listener gestisce l'apertura e la chiusura del menu quando viene cliccato il pulsante di toggle del menu.</p>
+                        <p><strong>Funzionamento:</strong> Il listener è associato al pulsante di toggle del menu (<code>menuToggle</code>). Quando viene cliccato, la funzione alterna la posizione del menu aggiungendo o rimuovendo la classe <code>translate-x-full</code>, che sposta il menu fuori dalla vista o lo rende visibile. Viene inoltre impostata una variabile di stato (<code>isInteractingWithMenu</code>) per tenere traccia dell'interazione dell'utente con il menu.</p>
+                        <p class="mt-4"><strong>Event Listener per il pulsante di chiusura del menu</strong></p>
+                        <p><strong>Descrizione:</strong> Questo listener gestisce la chiusura del menu quando viene cliccato il pulsante di chiusura del menu.</p>
+                        <p><strong>Funzionamento:</strong> Il listener è associato al pulsante di chiusura del menu (menuClose). Quando viene cliccato, la funzione aggiunge la classe translate-x-full al menu, nascondendolo dalla vista. Inoltre, viene aggiornato lo stato dell'interazione dell'utente con il menu (isInteractingWithMenu) per indicare che l'interazione è terminata.</p>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">Menu a Discesa per i Controlli</h3>
+                        <p><strong>Event Listener per l'header dei controlli</strong></p>
+                        <p><strong>Descrizione:</strong> Questo listener gestisce la visibilità del contenuto dei controlli quando viene cliccato l'header dei controlli.</p>
+                        <p><strong>Funzionamento:</strong> Il listener è associato all'header dei controlli (controlsHeader). Quando viene cliccato, la funzione controlla se il contenuto dei controlli (controlsContent) è nascosto tramite la classe hidden. Se lo è, la classe viene rimossa e viene aggiunta la classe opacity-100 per rendere il contenuto completamente visibile. Se invece il contenuto è visibile, la funzione aggiunge la classe opacity-0 per nasconderlo e riapplica la classe hidden.</p>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-2xl font-semibold mb-2 text-blue-600 font-mono">Listener per dispositivi mobili</h3>
+                        <p><strong>Event Listener per eventi touch sui pulsanti</strong></p>
+                        <p><strong>Descrizione:</strong> Questo listener gestisce gli eventi touch per tutti i pulsanti, prevenendo il comportamento predefinito e gestendo le azioni touch specifiche.</p>
+                        <p><strong>Funzionamento:</strong> La funzione seleziona tutti gli elementi <code>&lt;button&gt;</code> e aggiunge due listener per ciascuno: uno per l'evento touchstart e uno per l'evento touchend. Entrambi i listener controllano se l'evento è annullabile (cancelable) e, se lo è, ne prevengono il comportamento predefinito, come lo zoom o la selezione del testo. Questo garantisce un'esperienza touch ottimale sugli schermi mobili.</p>
+                    </div>
+                </section>
+
+                <section id="notes" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Note</h2>
+                    <p><strong>Compatibilità con i Browser</strong>: Il metodo getContext("webgl") per ottenere il contesto WebGL è supportato dalla maggior parte dei browser moderni, ma non è garantito che sia supportato da tutti. in questo progetto si è voluto verificare la compatibilità con i browser target e fornire alternative o messaggi di errore appropriati se WebGL non è supportato.</p>
+
+                    <p class="mt-4"><strong>isInteractingWithMenu</strong>: La variabile isInteractingWithMenu viene utilizzata per tenere traccia dell'interazione con il menu. Se l'utente interagisce con il menu tramite il pulsante di toggle, la variabile viene impostata su true. Se l'utente interagisce con il menu tramite il pulsante di chiusura, la variabile viene impostata su false. Questo consente di gestire correttamente lo scroll evitando di effettuare zoom nel canvas e di ruotare la visuale se vengono modificati dei valori degli slider tramite spostamento del mouse.</p>
+                </section>
+
+            </section>
+        <!-- Floating button to return to top -->
+        <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 hover:bg-gray-700">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </main>
+    <footer class="bg-gray-900 text-white p-4">
+        <div class="container mx-auto text-center max-w-screen-lg">
+            <p>&copy; 2024 Luca Polese. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+        });
+
+        // Show/hide "Back to top" button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 200) {
+                backToTopButton.classList.remove('opacity-0');
+                backToTopButton.classList.add('opacity-100');
+            } else {
+                backToTopButton.classList.remove('opacity-100');
+                backToTopButton.classList.add('opacity-0');
+            }
+        });
+
+        // Scroll to top functionality
+        backToTopButton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    </body>
+</html>
