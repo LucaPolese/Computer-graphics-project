@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="it">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Documentazione progetto - A glimpse of city</title>
+		<!-- Tailwind CSS CDN -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+
+	<body class="bg-gray-100 text-gray-900">
+		<header class="bg-gray-900 text-white p-4 w-full z-50 shadow-lg">
+			<div class="container mx-auto flex justify-between items-center max-w-screen-lg">
+				<h1 class="text-3xl font-semibold">A glimpse of city</h1>
+				<button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+					<i class="fas fa-bars fa-2x"></i>
+				</button>
+				<nav class="hidden md:flex inline-flex rounded-md shadow-sm">
+					<ul class="flex">
+						<li><a href="#home" class="px-3 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">Home</a></li>
+						<li><a href="#intro" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">Intro</a></li>
+						<li><a href="#services" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">Script</a></li>
+						<li><a href="#constraints" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">Vincoli</a></li>
+						<li><a href="#run" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">Esecuzione</a></li>
+						<li><a href="#gui" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">GUI</a></li>
+						<li><a href="#render" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">Render</a></li>
+						<li><a href="#sources" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">Fonti</a></li>
+					</ul>
+				</nav>
+			</div>
+			<nav class="md:hidden absolute top-12 right-2 w-48 bg-gray-800 rounded-lg mt-2 hidden" id="nav-menu">
+				<ul class="flex flex-col space-y-2 py-4 px-6">
+					<li><a href="#home" class="nav-link hover:text-gray-300">Home</a></li>
+					<li><a href="#intro" class="nav-link hover:text-gray-300">Introduzione</a></li>
+					<li><a href="#services" class="nav-link hover:text-gray-300">Script</a></li>
+					<li><a href="#constraints" class="nav-link hover:text-gray-300">Vincoli</a></li>
+					<li><a href="#run" class="nav-link hover:text-gray-300">Esecuzione</a></li>
+					<li><a href="#gui" class="nav-link hover:text-gray-300">Interfaccia grafica</a></li>
+					<li><a href="#render" class="nav-link hover:text-gray-300">Rendering</a></li>
+					<li><a href="#sources" class="nav-link hover:text-gray-300">Fonti</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<section id="home" class="px-4 py-10">
+				<div class="container mx-auto text-center max-w-screen-lg">
+					<h2 class="text-3xl font-bold mb-4">Documentazione del progetto</h2>
+					<h3 class="text-xl">Progetto per il corso - Computer Graphics</h3>
+					<p class="mb-4">Luca Polese - Matricola 0001136728</p>
+					<a href="http://github.com/LucaPolese/Computer-graphics-project"
+						class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">Repository su
+						<strong>Github</strong></a>
+				</div>
+			</section>
+
+			<section id="intro" class="bg-white py-12">
+				<div class="container mx-auto px-4 max-w-screen-lg">
+					<h2 class="text-3xl font-semibold mb-6">Introduzione</h2>
+					<p>Quanto presente in questa relazione è una descrizione di quanto realizzato per il corso di Computer Graphics dell'Università di Bologna. L'obiettivo di tale progetto è quello di sviluppare ua 3D-WebApp tecnologie quali HTML5, CSS3, contesto WebGL e linguaggi Javascript e GLSL. 
+					Il progetto <b>A glimpse of city</b> permette all'utente di interagire con un ambiente 3D immersivo. 
+					L'esperienza interattiva 3D dev'essere composta da almeno un oggetto principale di tipo mesh poligonale caricato da file (OBJ Wavefront), inserito in una scenografia con illuminazione e texture ad hoc.
+					Per questa specifica applicazione, il focus principale è stato quello di offre un'esperienza visiva che permetta agli utenti di esplorare e interagire con un modello 3D di una città virtuale attraverso un'interfaccia utente responsive. Questo progetto è stato originariamente pensato per essere utilizzato da molteplici piattaforme ed è stato testato in particolare in ambito desktop e in ambito mobile. </p>
+
+					<p>Il progetto è disponibile al seguente <a href="../index.html" class="text-blue-500">link</a></p>
+
+					<p>Questo progetto può essere anche visualizzato online nel seguente <a href="https://lucapolese.github.io/Computer-graphics-project" class="text-blue-500">sito</a></p>
+
+					<h3 class="text-2xl font-semibold mt-8 mb-4">Informazioni generali sul progetto</h3>
+					<h4 class="text-xl font-semibold mt-2 mb-2">Modalità di caricamento</h4>
+					<p>All'avvio, viene mostrata una finestra di caricamento per garantire una transizione fluida e informare l'utente che il contenuto è in fase di preparazione.</p>
+
+					<h4 class="text-xl font-semibold mt-2 mb-2">Menu laterale</h4>
+					<p>Il menu laterale versatile fornisce opzioni di configurazione per personalizzare l'esperienza dell'utente.
+					Le impostazioni includono la posizione della luce e le opzioni per abilitare/disabilitare effetti come le normali, la trasparenza e i riflessi.</p>
+
+					<h4 class="text-xl font-semibold mt-2 mb-2">Interazione Utente</h4>
+					<p>Sono disponibili vari controlli per l'interazione, inclusi pulsanti per la navigazione e le impostazioni, e un pannello per i controlli mobili. Le azioni come il movimento, la rotazione della telecamera e	il reset della posizione dell'utente sono gestibili tramite comandi specifici.</p>
+				</div>
+			</section>
+
+			<section id="services" class="py-12">
+				<div class="container mx-auto px-4 max-w-screen-lg">
+					<h2 class="text-3xl font-semibold mb-6 text-center">Script realizzati</h2>
+					<p class=" text-center max-w-screen-sm mx-auto">In seguito vengono elencati tutti i file JavaScript realizzati per il progetto. <br/> Ognuna delle card è un link che porta alla pagina relativa che ne documenta il contenuto.</p>
+					<div class=" mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<!-- Card 1 -->
+						<a href="./pages/generalUtils.html"
+							class="bg-white p-6 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+							aria-label="Service One">
+							<h3 class="text-xl mb-3 border-b-4 inline-block border-blue-500 font-mono">generalUtils.js</h3>
+							<p class="text-gray-700">Raccolta di funzioni ad uso generico per la gestione di eventi per l'interfaccia grafica o funzioni utilizzate in molteplici documenti JavaScript.</p>
+						</a>
+
+						<!-- Card 2 -->
+						<a href="./pages/geometryUtils.html"
+							class="bg-white p-6 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+							aria-label="geometryUtils">
+							<h3 class="text-xl mb-3 border-b-4 inline-block border-blue-500 font-mono">geometryUtils.js</h3>
+							<p class="text-gray-700">Raccolta di funzioni per la gestione di movimento e rotazione della telecamera. Studiato per input da tastiera, mouse, touchscreen e gamepad.</p>
+						</a>
+
+						<a href="./pages/indexjs.html"
+							class="bg-white p-6 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+							aria-label="index">
+							<h3 class="text-xl mb-3 border-b-4 inline-block border-blue-500 font-mono">index.js</h3>
+							<p class="text-gray-700">File JavaScript principale del progetto. Gestisce il rendering della scena, carica i modelli OBJ e aggiorna la posizione della telecamera e l'illuminazione in tempo reale.</p>
+						</a>
+
+						<a href="./pages/objUtils.html"
+							class="bg-white p-6 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+							aria-label="objUtils">
+							<h3 class="text-xl mb-3 border-b-4 inline-block border-blue-500 font-mono">objUtils.js</h3>
+							<p class="text-gray-700">Raccolta di funzioni per caricare e interpretare file OBJ e MTL per visualizzare modelli 3D in WebGL. Gestisce geometrie, materiali e texture, preparando i dati per la renderizzazione.</p>
+						</a>
+
+						<a href="./pages/skybox.html"
+							class="bg-white p-6 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+							aria-label="skybox">
+							<h3 class="text-xl mb-3 border-b-4 inline-block border-blue-500 font-mono">skybox.js</h3>
+							<p class="text-gray-700">Raccolta di funzioni utilizzate per creare e visualizzare una skybox 3D, caricando immagini su una cubemap e renderizzando uno sfondo panoramico attorno alla scena.</p>
+						</a>
+
+						<!-- Card 3 -->
+						<a href="./pages/textureUtils.html"
+							class="bg-white p-6 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 ease-in-out"
+							aria-label="textureUtils">
+							<h3 class="text-xl mb-3 border-b-4 inline-block border-blue-500 font-mono">textureUtils.js</h3>
+							<p class="text-gray-700">Script per creare e gestire texture, per il normal mapping e controllare opzioni di rendering.</p>
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<section id="constraints" class="bg-white py-12">
+				<div class="container mx-auto px-4 max-w-screen-lg">
+					<h2 class="text-3xl font-semibold mb-6">Richieste grafiche</h2>
+					<h3 class="text-2xl font-semibold mt-8 mb-4">Richieste obbligatorie soddisfatte</h3>
+					<ul>
+
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							Geometria 3D visualizzata in proiezione prospettica;
+						</li>
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							Input utente: l'utente può interagire usando indipendentemente tastiera e mouse;
+						</li>
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							Gli oggetti 3D devono essere illuminati da una luce;
+						</li>
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							Texture mapping: nel progetto sono inseriti molteplici oggetti 3D che hanno una propria texture applicata ed è stato aggiunto un banner con la foto dell'autore del progetto;
+						</li>
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							È stato creato ad hoc un pannello su schermo che prevede tramite slider e checkbox di attivare o disattivare metodi avanzati di rendering e di modificare il posizionamento della luce;
+						</li>
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							La piattaforma è fruibile anche da un dispositivo mobile tramite dei bottoni che possono essere cliccati dall'utente per potersi muovere nello spazio, cambiare direzione e ripristinare posizione iniziale e luce;
+						</li>
+					</ul>
+					<h3 class="text-2xl font-semibold mt-8 mb-4">Richieste opzionali soddisfatte</h3>
+					<ul>
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							Input utente: l'utente può interagire usando un gamepad (testato nello specifico con controller PS4);
+						</li>
+						<li class="flex">
+							<i class="green fa-solid fa-circle-check ml-6 mr-2 mt-1" style="color: green;"></i>
+							Rendering avanzati: Da menù è possibile attivare/disattivare le tecniche di rendering avanzato trasparenze, riflessioni, normal mapping.
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section id="run" class="py-12">
+				<p class="text-3xl font-semibold mb-6 text-center">Esecuzione del progetto</p>
+				<div class="container mx-auto px-4 max-w-screen-lg">
+					<p>Per eseguire il presente progetto è necessario utilizzare un server web locale. Sebbene sia possibile aprire direttamente i file .html in un browser, questo metodo potrebbe non funzionare correttamente quando vengono caricate risorse esterne.</p>
+					<p> Se si vuole utilizzare <b>Visual Studio Code (VSCode)</b> come editor, è possibile installare l'estensione <b>Live Server</b>. Questa estensione permette di avviare rapidamente un server web locale direttamente dall'editor. Una volta installata l'estensione, basta cliccare con il tasto destro sul file .html e selezionare "Open with Live Server" per avviare il server e visualizzare il progetto nel browser. Questa soluzione non solo permette di caricare correttamente tutte le risorse esterne, ma facilita anche il processo di sviluppo grazie all'aggiornamento automatico delle modifiche apportate al codice.</p>
+
+					<p>Oltre all'utilizzo di Visual Studio Code, esistono altre modalità per aprire un server web locale, che possono essere utilizzate. Una delle modalità più classiche consiste nell'utilizzare <code>Python</code>, che offre un server HTTP semplice e immediato.</p>
+
+					<p>Se hai <code>Python</code> installato sul tuo sistema, puoi aprire un terminale e navigare fino alla directory del progetto. Per navigare fino alla cartella specifica si può usare il comando <code>cd</code> seguito dal percorso della cartella. Ad esempio:
+
+				<div class="bg-gray-200 rounded-md border border-gray-700 overflow-hidden max-w-full my-2">
+					<div class="flex items-center justify-between text-xs font-sans bg-gray-300 text-black px-4 py-2">
+						<span>bash</span>
+						<button onclick="copyToClipboard('bash-code')" class="flex items-center gap-1 text-black hover:text-blue-700">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" class="icon-sm">
+								<i class="fa-regular fa-copy" style= "color: #000;"></i>
+							</svg>
+							Copia codice
+						</button>
+					</div>
+					<div class="p-4 overflow-x-auto">
+						<code id="bash-code" class="text-black">cd /percorso/della/cartella</code>
+					</div>
+				</div>
+				
+				Una volta nella directory, puoi eseguire uno dei seguenti comandi.
+				
+				<p>Per <code>Python 3</code>:</p>
+				<div class="bg-gray-200 rounded-md border border-gray-700 overflow-hidden max-w-full my-2">
+					<div class="flex items-center justify-between text-xs font-sans bg-gray-300 text-black px-4 py-2">
+						<span>python</span>
+						<button onclick="copyToClipboard('python3')" class="flex items-center gap-1 text-black hover:text-blue-700">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" class="icon-sm">
+								<i class="fa-regular fa-copy" style= "color: #000;"></i>
+							</svg>
+							Copia codice
+						</button>
+					</div>
+					<div class="p-4 overflow-x-auto">
+						<code id="python3" class="text-black">python -m http.server</code>
+					</div>
+				</div>
+
+				<p>Per <code>Python 2</code>:</p>
+				<div class="bg-gray-200 rounded-md border border-gray-700 overflow-hidden max-w-full my-2">
+					<div class="flex items-center justify-between text-xs font-sans bg-gray-300 text-black px-4 py-2">
+						<span>python</span>
+						<button onclick="copyToClipboard('python2')" class="flex items-center gap-1 text-black hover:text-blue-700">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" class="icon-sm">
+								<i class="fa-regular fa-copy" style= "color: #000;"></i>
+							</svg>
+							Copia codice
+						</button>
+					</div>
+					<div class="p-4 overflow-x-auto">
+						<code id="python2" class="text-black">python -m SimpleHTTPServer</code>
+					</div>
+				</div>
+				Questo avvierà un server web locale che servirà i file della directory corrente. Il server sarà accessibile aprendo un browser e navigando all'indirizzo <code>http://localhost:8000</code>. Questo metodo non richiede l'installazione di ulteriori software o estensioni.</p>
+
+				<!-- Modale di conferma copia -->
+				<div id="copy-modal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden z-50">
+					<div class="bg-white p-4 rounded-lg shadow-lg max-w-xs text-center">
+						<p class="text-lg font-semibold">Codice copiato nei tuoi appunti!</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="gui" class="bg-white py-12">
+				<p class="text-3xl font-semibold mb-6 text-center">Interfaccia grafica</p>
+				<div class="container mx-auto px-4 max-w-screen-lg">
+					<p>L'interfaccia grafica del progetto è stata progettata con l'obiettivo di garantire una fruizione ottimale sia su PC che su dispositivi mobili, offrendo un'esperienza d'uso intuitiva e coinvolgente. La struttura dell'interfaccia è suddivisa in piattaforma, tasti di movimento e impostazioni. Ciascuna dedicata a funzioni specifiche che permettono all'utente di interagire con il simulatore in modo personalizzato.</p>
+						
+					<h4 class="text-2xl font-semibold mt-8 mb-4">Piattaforma (città)</h4>
+					<p>La sezione principale dell'interfaccia è dedicata alla visualizzazione della simulazione, dove vengono renderizzati i modelli e gli elementi necessari per un'interazione dinamica.</p>
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 my-4">
+						<div class="w-full h-auto rounded-lg shadow-lg p-4">
+							<img src="images/gui-desktop.png" class="w-full h-auto rounded-lg shadow-lg">
+							<p class="text-center">Interfaccia grafica su dispositivo desktop</p>
+						</div>
+						<div class="w-full h-auto rounded-lg shadow-lg p-4">
+							<img src="images/gui-mobile.png" class="w-full h-auto rounded-lg shadow-lg">
+							<p class="text-center">Interfaccia grafica su dispositivo mobile</p>
+						</div>
+					</div>
+					<p> Su dispositivi mobili, l'interfaccia di gioco è ulteriormente arricchita da una serie di pulsanti touch, che consentono di gestire tutte le funzionalità senza la necessità di una tastiera fisica. Questo approccio rende l'esperienza fluida e accessibile, indipendentemente dal dispositivo utilizzato.</p>
+						
+					<h4 class="text-2xl font-semibold mt-8 mb-4">Tasti di movimento</h4>
+					<p>L'utente può muoversi all'interno dello spazio utilizzando tre modalità principali di controllo: tastiera, mouse e gamepad. Ogni modalità offre un'esperienza di controllo differente, consentendo all'utente di scegliere quella più adatta alle proprie abitudini. In questa sezione vengono fornite dettagliate istruzioni su come interagire con la simulazione, suddivise in base al dispositivo utilizzato. Qui è possibile trovare una lista completa dei comandi, affiancata dalle relative azioni che possono essere eseguite tramite tastiera, mouse o controller:</p>
+
+					<p class="text-xl font-bold mt-4">Tastiera</p>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-solid fa-w text-lg"></i>
+						<p> per muoversi in avanti</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-solid fa-a text-lg"></i>
+						<p> per muoversi a sinistra</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-solid fa-s text-lg"></i>
+						<p> per muoversi all'indietro</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-solid fa-d text-lg"></i>
+						<p> per muoversi a destra</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-arrow-left text-lg"></i>
+						<p> per ruotare la camera a sinistra</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-arrow-right text-lg"></i>
+						<p> per ruotare la camera a destra</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-solid fa-r text-lg"></i>
+						<p> per resettare luci e posizione dell'utente</p>
+					</div>
+					
+					<p class="text-xl font-bold mt-4">Mouse</p>
+					Il mouse offre un controllo preciso della visuale, con la rotazione della telecamera attivabile tramite il movimento del mouse stesso.
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-solid fa-computer-mouse text-lg"></i>
+						<p><strong>Rotella del mouse</strong> per fare zoom</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-mouse-pointer text-lg"></i>
+						<p><strong>Click and Drag</strong> per ruotare la camera con il mouse</p>
+					</div>
+					
+					<p class="text-xl font-bold mt-4">Gamepad</p>
+					Il gamepad offre un'esperienza di gioco simile a quella delle console, con il movimento del personaggio e la rotazione della telecamera gestito tramite le levette del joystick. Anche in questa modalità è possibile resettare la posizione delle luci e dell'utente.
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-gamepad text-lg"></i>
+						<p><strong>Levetta sinistra</strong> per spostare l'utente nello spazio</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fas fa-gamepad text-lg"></i>
+						<p><strong>Levetta destra</strong> per ruotare la camera dell'utente</p>
+					</div>
+					<div class="flex items-center space-x-2">
+						<i class="fa-regular fa-circle-xmark"></i>
+						<p>per resettare luci e posizione dell'utente</p>
+					</div>				
+					
+					<h4 class="text-2xl font-semibold mt-8 mb-4">Impostazioni</h4> 
+					<p>Tutti i comandi e le impostazioni del progetto possono essere visualizzate nell'apposito menu laterale. L'utente ha la possibilità di personalizzare vari aspetti del progetto. Tra le opzioni disponibili, regolare la posizione delle luci, selezionare le preferenze per il rendering della scena e visualizzare i comandi. Queste impostazioni sono facilmente accessibili e permettono di adattare l'esperienza alle proprie esigenze e preferenze.</p>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 my-4">
+						<div class="w-full h-auto rounded-lg shadow-lg p-4">
+							<img src="images/settings-desktop.png" class="w-full h-auto rounded-lg shadow-lg">
+							<p class="text-center">Interfaccia grafica su dispositivo desktop</p>
+						</div>
+						<div class="w-full h-auto rounded-lg shadow-lg p-4">
+							<img src="images/settings-mobile.png" class="w-full h-auto rounded-lg shadow-lg">
+							<p class="text-center">Interfaccia grafica su dispositivo mobile</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="render" class="py-12">
+				<p class="text-3xl font-semibold mb-6 text-center">Rendering Avanzato</p>
+				<div class="container mx-auto px-4 max-w-screen-lg">
+					<p>Il progetto offre la possibilità di attivare diverse tecniche di rendering avanzato per migliorare la qualità visiva della scena. Queste opzioni sono facilmente accessibili tramite il menu laterale e permettono all'utente di personalizzare l'esperienza sulla piattaforma in base alle proprie preferenze. Le tecniche di rendering avanzato adottate sono:</p>
+					<div class="my-4">
+						<div class="justify-center grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+							<div class="w-full h-auto rounded-lg shadow-lg p-4">
+								<span class="font-semibold">Normal Mapping</span>: una tecnica che permette di simulare dettagli geometrici su una superficie senza aumentare il numero di poligoni.
+							</div>
+							<div class="w-full h-auto rounded-lg shadow-lg p-4">
+								<div class="w-full h-auto rounded-lg shadow-lg p-4">
+									<img src="images/nm-desktop.png" class="w-full h-auto rounded-lg shadow-lg">
+									<p class="text-center">Interfaccia grafica su dispositivo desktop</p>
+								</div>
+								<div class="w-full h-auto rounded-lg shadow-lg p-4">
+									<img src="images/nm-mobile.png" class="w-full h-auto rounded-lg shadow-lg">
+									<p class="text-center">Interfaccia grafica su dispositivo mobile</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+							<!-- Colonna con le immagini e il testo "Trasparenze" -->
+							<div class="flex flex-col-reverse md:flex-col md:order-1">
+								<!-- Immagini "Trasparenze" -->
+								<div class="w-full h-auto rounded-lg shadow-lg p-4">
+									<img src="images/trasp-desktop.png" class="w-full h-auto rounded-lg shadow-lg">
+									<p class="text-center">Interfaccia grafica su dispositivo desktop</p>
+								</div>
+								<div class="w-full h-auto rounded-lg shadow-lg p-4">
+									<img src="images/trasp-mobile.png" class="w-full h-auto rounded-lg shadow-lg">
+									<p class="text-center">Interfaccia grafica su dispositivo mobile</p>
+								</div>
+								<!-- Testo "Trasparenze" -->
+								<div class="w-full h-auto rounded-lg shadow-lg p-4 md:hidden lg:hidden">
+									<span class="font-semibold">Trasparenze</span>: la possibilità di rendere trasparenti alcuni oggetti della scena, per creare effetti di profondità e sovrapposizione.
+								</div>
+							</div>
+							
+							<!-- Colonna con il testo "Trasparenze" -->
+							<div class="w-full h-auto rounded-lg shadow-lg p-4 md:order-2 sm:hidden md:block">
+								<!-- Testo "Trasparenze" -->
+								<span class="font-semibold">Trasparenze</span>: la possibilità di rendere trasparenti alcuni oggetti della scena, per creare effetti di profondità e sovrapposizione.
+							</div>
+						</div>
+						
+
+						<div class="justify-center grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+							<div class="w-full h-auto rounded-lg shadow-lg p-4">
+								<span class="font-semibold">Riflessioni</span>: la capacità di aggiungere riflessi specchianti su superfici riflettenti, per creare effetti di luce e ombra più realistici.
+							</div>
+							<div class="w-full h-auto rounded-lg shadow-lg p-4">
+								<div class="w-full h-auto rounded-lg shadow-lg p-4">
+									<img src="images/spec-desktop.png" class="w-full h-auto rounded-lg shadow-lg">
+									<p class="text-center">Interfaccia grafica su dispositivo desktop</p>
+								</div>
+								<div class="w-full h-auto rounded-lg shadow-lg p-4">
+									<img src="images/spec-mobile.png" class="w-full h-auto rounded-lg shadow-lg">
+									<p class="text-center">Interfaccia grafica su dispositivo mobile</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p>Queste tecniche possono essere attivate o disattivate a piacimento, in modo da personalizzare l'esperienza di gioco in base alle proprie preferenze. L'utente può sperimentare con le diverse opzioni per ottenere il risultato visivo desiderato e creare un'esperienza di gioco unica e coinvolgente.</p>
+				</div>
+			</section>
+
+			<section id="sources" class="bg-white py-12">
+				<p class="text-3xl font-semibold mb-6 text-center">Fonti</p>
+				<div class="container mx-auto px-4 max-w-screen-lg">
+					<p>Il progetto è stato realizzato utilizzando una serie di risorse e strumenti open source. Di seguito sono elencate le principali fonti utilizzate per la realizzazione del progetto:</p>
+					<ul class="list-disc list-inside ml-4">
+						<li><a class="text-blue-700" href="https://webglfundamentals.org/" target="_blank">webglfundamentals.org</a></li>
+						<li><a class="text-blue-700" href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API" target="_blank">MDN WebGL Documentation</a></li>
+						<li><a class="text-blue-700" href="https://webglfundamentals.org/webgl/resources/m4.js" target="_blank">m4.js (webglfundamentals)</a></li>
+						<li><a class="text-blue-700" href="https://webglfundamentals.org/webgl/resources/webgl-utils.js" target="_blank">webgl-utils.js (webglfundamentals)</a></li>
+						<li><a class="text-blue-700" href="https://www.dm.unibo.it/~casciola/html/CG2324.html" target="_blank">Insegnamenti del corso "Computer Graphics"</a></li>
+					</ul>
+				</div>
+			</section>
+
+			<!-- Floating button to return to top -->
+            <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 ">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+
+		</main>
+
+		<footer class="bg-gray-900 text-white p-4">
+			<div class="container mx-auto text-center max-w-screen-lg">
+				<p>&copy; 2024 Luca Polese. All rights reserved.</p>
+			</div>
+		</footer>
+
+		<script>
+			// Toggle menu visibility
+			document.getElementById('menu-toggle').addEventListener('click', function () {
+				const navMenu = document.getElementById('nav-menu');
+				navMenu.classList.toggle('hidden');
+			});
+
+			// Close menu when a link is clicked
+			document.querySelectorAll('.nav-link').forEach(link => {
+				link.addEventListener('click', function () {
+					const navMenu = document.getElementById('nav-menu');
+					navMenu.classList.add('hidden');
+				});
+			});
+
+			// Copy code to clipboard using a fallback method
+			function copyToClipboard(elementName) {
+				const codeElement = document.getElementById(elementName).innerText;
+				const textArea = document.createElement('textarea');
+				textArea.value = codeElement;
+				document.body.appendChild(textArea);
+				textArea.select();
+				try {
+					document.execCommand('copy');
+					showCopyModal(); // Mostra la modale
+				} catch (err) {
+					console.error('Errore durante la copia del codice: ', err);
+				}
+				document.body.removeChild(textArea);
+			}
+
+			function showCopyModal() {
+				const modal = document.getElementById('copy-modal');
+				modal.classList.remove('hidden');
+				setTimeout(() => {
+					modal.classList.add('hidden');
+				}, 1500);
+			}
+
+			// Show/hide "Back to top" button
+		    const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    backToTopButton.classList.remove('opacity-0');
+                    backToTopButton.classList.add('opacity-100');
+                } else {
+                    backToTopButton.classList.remove('opacity-100');
+                    backToTopButton.classList.add('opacity-0');
+                }
+            });
+
+            // Scroll to top functionality
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+		</script>
+	</body>
+</html>
