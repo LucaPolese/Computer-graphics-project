@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="it">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Documentazione progetto - A glimpse of city</title>
+        <!-- Tailwind CSS CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body class="bg-gray-100 text-gray-900">
+        <header class="bg-gray-900 text-white p-4 w-full z-50 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center max-w-screen-lg">
+                <div class="brand">
+                    <h1 class="text-3xl font-semibold">A glimpse of city</h1>
+                    <h2 class="text-lg font-mono">index.js</h2>
+                </div>
+                <!-- Visibile solo su schermi medi e più grandi -->
+                <a href="../index.html" class="hidden md:block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                    <i class="fas fa-bars fa-2x"></i>
+                </button>
+            </div>
+
+            <nav class="md:hidden absolute top-16 right-0 w-48 bg-gray-800 rounded-lg mt-2 hidden" id="nav-menu">
+                <ul class="flex flex-col space-y-2 py-4 px-6">
+                    <li><a href="#overview" class="hover:text-gray-300">Panoramica</a></li>
+                    <li><a href="#functions" class="hover:text-gray-300">Funzioni</a></li>
+                    <li><a href="#notes" class="hover:text-gray-300">Note</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Contenuto Principale -->
+        <main class="flex">
+            <!-- Sidebar -->
+            <aside class="sidebar bg-white p-6 border-r border-gray-300 hidden md:block sticky top-0 h-screen overflow-y-auto w-64">
+                <h2 class="text-xl font-semibold mb-4">Indice</h2>
+                <ul class="space-y-3">
+                    <li><a href="#overview" class="text-blue-500 hover:underline">Panoramica</a></li>
+                    <li><a href="#functions" class="text-blue-500 hover:underline">Funzioni</a></li>
+                    <li><a href="#notes" class="text-blue-500 hover:underline">Note</a></li>
+                </ul>
+            </aside>
+
+            <!-- Area di Contenuto -->
+            <section class="content flex-1 p-8 bg-gray-50">
+                <div class="flex justify-end">
+                    <!-- Visibile solo su schermi piccoli -->
+                    <a href="../index.html" class="block md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                </div>
+
+                <!-- Panoramica -->
+                <section id="overview" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Panoramica</h2>
+                    <p>Questo script utilizza WebGL per caricare e visualizzare una scena 3D composta da vari modelli OBJ, come auto, edifici, alberi, e altro. La scena è interattiva, permettendo all'utente di modificare la direzione della luce tramite dei controlli dell'interfaccia utente (slider). Il codice è strutturato per essere modulare e facilmente estensibile, con funzioni separate per gestire il caricamento dei modelli, l'aggiornamento della posizione della telecamera, e il rendering della scena. Viene utilizzata la libreria <code>m4</code> per le operazioni di matrice e vettore, e <code>webglUtils</code> per semplificare l'uso delle API WebGL.</p>
+                </section>
+
+                <!-- Funzioni -->
+                <section id="functions" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Funzioni</h2>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">main()</h3>
+                        <p><strong>Descrizione:</strong> Funzione principale che inizializza e avvia il processo di rendering WebGL.</p>
+                        <p><strong>Funzionamento:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Verifica la disponibilità del contesto WebGL.</li>
+                            <li>Visualizza un modal di caricamento durante il caricamento degli asset.</li>
+                            <li>Imposta texture e shader per il rendering.</li>
+                            <li>Carica modelli 3D da file OBJ in modo asincrono.</li>
+                            <li>Avvia il loop di rendering chiamando <code>render()</code> ricorsivamente.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">updateLightDirection()</h3>
+                        <p><strong>Descrizione:</strong> Aggiorna la direzione della luce in base ai valori dei controlli dell'interfaccia utente.</p>
+                        <p><strong>Funzionamento:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Recupera i valori dagli slider (x, y, z) che controllano la direzione della luce.</li>
+                            <li>Normalizza il vettore della direzione della luce con i nuovi valori.</li>
+                            <li>Aggiorna la visualizzazione dei valori attuali nell'interfaccia utente.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">render(time)</h3>
+                        <p><strong>Descrizione:</strong> Funzione di rendering che viene chiamata in loop per disegnare la scena 3D.</p>
+                        <p><strong>Funzionamento:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Aggiorna la posizione della telecamera.</li>
+                            <li>Ridimensiona il canvas in base alle dimensioni della finestra.</li>
+                            <li>Imposta i parametri di rendering come la proiezione e la vista.</li>
+                            <li>Configura e applica le uniformi condivise per tutte le mesh.</li>
+                            <li>Esegue il rendering di ciascun modello 3D nella scena.</li>
+                            <li>Richiama <code>requestAnimationFrame</code> per continuare il loop di rendering.</li>
+                        </ul>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>time</code>: Tempo attuale in millisecondi, passato automaticamente da <code>requestAnimationFrame</code>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">renderModel(model)</h3>
+                        <p><strong>Descrizione:</strong> Funzione di supporto per il rendering di un singolo modello 3D.</p>
+                        <p><strong>Funzionamento:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Per ogni parte del modello, imposta i buffer e gli attributi WebGL.</li>
+                            <li>Applica la matrice del mondo e uniformi specifiche del materiale.</li>
+                            <li>Disegna la parte corrente del modello.</li>
+                        </ul>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>model</code>: Il modello 3D da renderizzare.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">setUpDefaultTexture(gl)</h3>
+                        <p><strong>Descrizione:</strong> Inizializza le texture predefinite.</p>
+                        <p><strong>Funzionamento:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>Configura texture bianche e normali predefinite da utilizzare nei materiali dei modelli.</li>
+                        </ul>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>gl</code>: Il contesto WebGL.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Note -->
+                <section id="notes" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Note</h2>
+                    <ul>
+                        <li class="mt-4"><strong>Scalabilità e Manutenzione:</strong> La struttura modulare del codice è progettata per facilitare l'aggiunta di nuovi modelli e caratteristiche senza dover riscrivere il codice esistente. L'aumento della complessità della scena o l'aggiunta di nuovi modelli, determina una necessità di mantenere il codice ben organizzato e documentato.</li>
+                    </ul>
+                </section>
+            </section>
+            
+            <!-- Floating button to return to top -->
+            <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 hover:bg-gray-700">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </main>
+
+        <footer class="bg-gray-900 text-white p-4">
+            <div class="container mx-auto text-center max-w-screen-lg">
+                <p>&copy; 2024 Luca Polese. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+            });
+
+            // Show/hide "Back to top" button
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    backToTopButton.classList.remove('opacity-0');
+                    backToTopButton.classList.add('opacity-100');
+                } else {
+                    backToTopButton.classList.remove('opacity-100');
+                    backToTopButton.classList.add('opacity-0');
+                }
+            });
+
+            // Scroll to top functionality
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
+    </body>
+
+</html>
