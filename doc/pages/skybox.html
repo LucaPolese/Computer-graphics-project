@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentazione progetto - A glimpse of city</title>
+    <!-- Tailwind CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+    <header class="bg-gray-900 text-white p-4 w-full z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center max-w-screen-lg">
+            <div class="brand">
+                <h1 class="text-3xl font-semibold">A glimpse of city</h1>
+                <h2 class="text-lg font-mono">skybox.js</h2>
+            </div>
+            <!-- Visibile solo su schermi medi e più grandi -->
+            <a href="../index.html" class="hidden md:block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+            <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                <i class="fas fa-bars fa-2x"></i>
+            </button>
+        </div>
+
+        <nav class="md:hidden absolute top-16 right-0 w-48 bg-gray-800 rounded-lg mt-2 hidden" id="nav-menu">
+            <ul class="flex flex-col space-y-2 py-4 px-6">
+                <li><a href="#overview" class="hover:text-gray-300">Panoramica</a></li>
+                <li><a href="#functions" class="hover:text-gray-300">Funzioni</a></li>
+                <li><a href="#events" class="text-blue-500">Gestione eventi</a></li>
+                <li><a href="#notes" class="hover:text-gray-300">Note</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenuto Principale -->
+    <main class="flex">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-white p-6 border-r border-gray-300 hidden md:block sticky top-0 h-screen overflow-y-auto w-64">
+            <h2 class="text-xl font-semibold mb-4">Indice</h2>
+            <ul class="space-y-3">
+                <li><a href="#overview" class="text-blue-500 hover:underline">Panoramica</a></li>
+                <li><a href="#functions" class="text-blue-500 hover:underline">Funzioni</a></li>
+                <li><a href="#events" class="text-blue-500">Gestione eventi</a></li>
+                <li><a href="#notes" class="text-blue-500 hover:underline">Note</a></li>
+            </ul>
+        </aside>
+
+        <!-- Area di Contenuto -->
+        <section class="content flex-1 p-8 bg-gray-50">
+            <div class="flex justify-end">
+                <!-- Visibile solo su schermi piccoli -->
+                <a href="../index.html" class="block md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+            </div>
+            <section id="overview" class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Panoramica</h2>
+                <p>Questo script utilizza WebGL per creare una skybox. Nello specifico permette di creare un ambiente 3D che simula un cielo o uno scenario circostante. Il codice inizializza un contesto WebGL su un elemento <code>&lt;canvas&gt;</code>, configura un programma GLSL con shader per il rendering del skybox, e carica una serie di immagini che rappresentano le sei facce di un cubemap. Viene poi impostato un ciclo di rendering che aggiorna costantemente la visuale del skybox, permettendo alla telecamera di orbitare attorno al centro della scena. Il codice include inoltre funzioni per gestire la geometria del skybox e per calcolare matrici di proiezione e vista, fondamentali per il rendering 3D.</p>
+            </section>
+
+            <section id="functions" class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Funzioni</h2>
+
+                <div class="function mb-8">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">main()</h3>
+                    <p><strong>Descrizione:</strong> Funzione principale che avvia il processo di rendering WebGL. Inizializza il contesto WebGL, carica le immagini della cubemap, configura il programma GLSL e avvia il ciclo di rendering.</p>
+                    <p><strong>Funzionamento:</strong> La funzione ottiene il contesto WebGL dal canvas, crea il programma GLSL utilizzando gli shader specificati, imposta i buffer e le texture necessarie per il rendering del skybox e avvia un ciclo di rendering che continua a richiamare la funzione <code>drawScene</code> per disegnare continuamente la scena.</p>
+                    <p><strong>Ritorna:</strong> Nessuno. Tuttavia, la funzione può interrompere l'esecuzione se il contesto WebGL non è disponibile.</p>
+                </div>
+
+                <div class="function mb-8">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">drawScene(time)</h3>
+                    <p><strong>Descrizione:</strong> Funzione di rendering che viene eseguita in un loop per aggiornare costantemente la scena disegnata sul canvas.</p>
+                    <p><strong>Funzionamento:</strong> Calcola la matrice di proiezione e la matrice di vista basate sulla posizione della telecamera. Imposta queste matrici nei relativi uniform della GPU e disegna la geometria del skybox. La funzione viene richiamata in loop per aggiornare continuamente la scena.</p>
+                    <p><strong>Parametri:</strong> <code>time</code> (Number): Il tempo corrente, passato automaticamente da <code>requestAnimationFrame</code>.</p>
+                    <p><strong>Ritorna:</strong> Nessuno. Tuttavia, richiama <code>requestAnimationFrame</code> per continuare il ciclo di rendering.</p>
+                </div>
+
+                <div class="function mb-8">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">setGeometry(gl)</h3>
+                    <p><strong>Descrizione:</strong> Funzione che carica i dati della geometria del skybox (un quad) nel buffer associato.</p>
+                    <p><strong>Funzionamento:</strong> Definisce un array di coordinate che rappresentano i vertici di un quadrato (quad) e carica questi dati nel buffer WebGL, in modo che possano essere utilizzati durante il rendering.</p>
+                    <p><strong>Parametri:</strong> <code>gl</code> (WebGLRenderingContext): Il contesto WebGL su cui operare.</p>
+                </div>
+
+                <div class="function mb-8">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">degToRad(d)</h3>
+                    <p><strong>Descrizione:</strong> Converte un valore in gradi in radianti.</p>
+                    <p><strong>Funzionamento:</strong> Moltiplica il valore in gradi per <code>Math.PI/180</code> per ottenere il valore equivalente in radianti.</p>
+                    <p><strong>Parametri:</strong> <code>d</code> (Number): L'angolo in gradi da convertire.</p>
+                    <p><strong>Ritorna:</strong> <code>Number</code>: L'angolo convertito in radianti.</p>
+                </div>
+            </section>
+
+            <section id="events" class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Gestione eventi</h2>
+                <div class="function mb-8">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">Caricamento delle Immagini del Cubemap</h3>
+                    <p><strong>Descrizione:</strong> Il caricamento delle immagini del cubemap avviene in modo asincrono per ciascuna faccia del cubo.</p>
+                    <p><strong>Funzionamento:</strong> Per ogni faccia del cubemap, viene creato un elemento <code>Image</code> che carica un'immagine specifica. Una volta caricata l'immagine, la funzione <code>texImage2D</code> viene utilizzata per caricare i dati dell'immagine nella texture WebGL associata. Viene anche generato il mipmap della texture per migliorare la qualità della resa.</p>
+                    <p><strong>Parametri:</strong> Nessuno specifico a un evento; utilizza le immagini definite nella struttura <code>faceInfos</code>.</p>
+                </div>
+            </section>
+
+            <section id="notes" class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Note</h2>
+                <ul>
+                    <li class="mt-4">
+                        <p><strong>Performance e Ottimizzazione:</strong> La funzione di rendering <code>drawScene</code> è ottimizzata per aggiornare continuamente la scena utilizzando <code>requestAnimationFrame</code>, che sincronizza il rendering con il refresh rate del display per ottenere animazioni fluide e migliorare le prestazioni.</p>
+                    </li>
+                    <li class="mt-4">
+                        <p><strong>Flessibilità della Camera:</strong> Il codice permette una rotazione flessibile della telecamera attorno al punto centrale della scena, offrendo una visione panoramica dell'ambiente 3D simulato. Il movimento della telecamera è controllato tramite l'uso delle matrici di proiezione e vista.</p>
+                    </li>
+                </ul>
+            </section>
+        </section>
+        <!-- Floating button to return to top -->
+        <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 hover:bg-gray-700">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </main>
+    <footer class="bg-gray-900 text-white p-4">
+        <div class="container mx-auto text-center max-w-screen-lg">
+            <p>&copy; 2024 Luca Polese. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+        });
+
+        // Show/hide "Back to top" button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 200) {
+                backToTopButton.classList.remove('opacity-0');
+                backToTopButton.classList.add('opacity-100');
+            } else {
+                backToTopButton.classList.remove('opacity-100');
+                backToTopButton.classList.add('opacity-0');
+            }
+        });
+
+        // Scroll to top functionality
+        backToTopButton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+
+</html>
