@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="it">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Documentazione progetto - A glimpse of city</title>
+		<!-- Tailwind CSS CDN -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+
+	<body class="bg-gray-100 text-gray-900">
+		<header class="bg-gray-900 text-white p-4 w-full z-50 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center max-w-screen-lg">
+                <div class="brand">
+                    <h1 class="text-3xl font-semibold">A glimpse of city</h1>
+                    <h2 class="text-lg font-mono">geometryUtils.js</h2>
+                </div>
+                <!-- Visibile solo su schermi medi e più grandi -->
+                <a href="../index.html" class="hidden md:block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                    <i class="fas fa-bars fa-2x"></i>
+                </button>
+            </div>
+
+            <nav class="md:hidden absolute top-16 right-0 w-48 bg-gray-800 rounded-lg mt-2 hidden" id="nav-menu">
+                <ul class="flex flex-col space-y-2 py-4 px-6">
+                    <li><a href="#overview" class="hover:text-gray-300">Panoramica</a></li>
+                    <li><a href="#functions" class="hover:text-gray-300">Funzioni</a></li>
+                    <li><a href="#events" class="hover:text-gray-300">Gestione eventi</a></li>
+                    <li><a href="#notes" class="hover:text-gray-300">Note</a></li>
+                </ul>
+            </nav>
+        </header>
+
+    <!-- Contenuto Principale -->
+        <main class="flex">
+            <!-- Sidebar -->
+            <aside class="sidebar bg-white p-6 border-r border-gray-300 hidden md:block sticky top-0 h-screen overflow-y-auto w-64">
+                <h2 class="text-xl font-semibold mb-4">Indice</h2>
+                <ul class="space-y-3">
+                    <li><a href="#overview" class="text-blue-500 hover:underline">Panoramica</a></li>
+                    <li><a href="#functions" class="text-blue-500 hover:underline">Funzioni</a></li>
+                    <li><a href="#events" class="hover:text-gray-300">Gestione eventi</a></li>
+                    <li><a href="#notes" class="text-blue-500 hover:underline">Note</a></li>
+                </ul>
+            </aside>
+
+            <!-- Area di Contenuto -->
+            <section class="content flex-1 p-8 bg-gray-50">
+                <div class="flex justify-end">
+                    <!-- Visibile solo su schermi piccoli -->
+                    <a href="../index.html" class="block md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                </div>
+
+                <section id="overview" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Panoramica</h2>
+                    <p>Questo script fornisce un sistema di controllo per il movimento e la gestione della telecamera in un contesto 3D. Supporta l'interazione tramite tastiera, mouse, touch screen e gamepad, offrendo un'esperienza di controllo versatile su diverse piattaforme. Esso mappa i tasti e i pulsanti per movimenti e rotazioni della telecamera, gestisce lo zoom con la rotella del mouse e assicura che la telecamera rimanga all'interno di confini predefiniti. Inoltre, calcola i confini del percorso basandosi sui dati dei file OBJ e integra tutti gli input per aggiornare la posizione della telecamera in modo fluido e interattivo.</p>
+                </section>
+
+                <section id="functions" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Funzioni</h2>
+
+                    <!-- Funzione: addTouchListeners -->
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">addTouchListeners(key)</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Aggiunge i listener per gli eventi touch ai pulsanti per dispositivi mobili o touchscreen.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Recupera l'elemento del pulsante tramite il suo ID e associa gli eventi <code>touchstart</code> e <code>touchend</code> per aggiornare lo stato dei tasti corrispondenti.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> <code>key</code> (string) - Il tasto/ID del pulsante corrispondente nell'oggetto <code>keys</code>.</p>
+                    </div>
+
+                    <!-- Funzione: calculateObjBoundaries -->
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">calculateObjBoundaries(objData)</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Calcola i confini dell'oggetto <code>Road</code> basandosi sui dati di un file OBJ.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Analizza i dati del file OBJ linea per linea, estraendo le coordinate X e Z per determinare i valori minimi e massimi, aggiornando così i confini della strada su cui l'utente si muove.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> <code>objData (string)</code> - Dati del file OBJ contenenti le posizioni dei vertici.</p>
+                    </div>
+
+                    <!-- Funzione: isWithinRoadBoundaries -->
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">isWithinRoadBoundaries(position)</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Verifica se la posizione della telecamera è all'interno dei confini dell'oggetto <code>Road</code></p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Confronta la posizione attuale della telecamera con i confini dell'oggetto <code>Road</code> precedentemente calcolati e determina se è all'interno di questi limiti.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> <code>position (array)</code> - La posizione della telecamera nel formato array.</p>
+                        <p><strong>Ritorna:</strong> <code>boolean</code> - Restituisce <code>true</code> se la posizione è all'interno dei confini, <code>false</code> altrimenti.</p>
+                    </div>
+
+                    <!-- Funzione: updateCameraPosition -->
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">updateCameraPosition()</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Aggiorna la posizione della telecamera basandosi sull'input dell'utente (tastiera, mouse, gamepad).</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Controlla gli input dell'utente tramite tastiera e gamepad per applicare movimenti e rotazioni alla telecamera. Verifica inoltre se la nuova posizione è all'interno dei confini del percorso prima di aggiornare la posizione effettiva della telecamera.</p>
+                    </div>
+                </section>
+
+                <section id="events" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Gestione eventi</h2>
+
+                    <!-- Evento: keydown -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">keydown</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando un tasto viene premuto sulla tastiera.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Imposta il valore corrispondente in <code>keys</code> su <code>true</code>, avviando il movimento o la rotazione corrispondente della telecamera.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>KeyboardEvent</code>.</p>
+                    </div>
+
+                    <!-- Evento: keyup -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">keyup</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando un tasto viene rilasciato sulla tastiera.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Imposta il valore corrispondente in <code>keys</code> su <code>false</code>, fermando il movimento o la rotazione corrispondente della telecamera.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>KeyboardEvent</code>.</p>
+                    </div>
+
+                    <!-- Evento: mousedown -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">mousedown</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando un pulsante del mouse viene premuto.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Attiva la modalità di rotazione della telecamera.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>MouseEvent</code>.</p>
+                    </div>
+
+                    <!-- Evento: mouseup -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">mouseup</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando un pulsante del mouse viene rilasciato.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Disattiva la modalità di rotazione della telecamera.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>MouseEvent</code>.</p>
+                    </div>
+
+                    <!-- Evento: mousemove -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">mousemove</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando il mouse viene spostato.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Aggiorna la rotazione della telecamera basandosi sul movimento del mouse.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>MouseEvent</code>.</p>
+                    </div>
+
+                    <!-- Evento: wheel -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">wheel</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando la rotellina del mouse viene utilizzata.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Controlla lo zoom della telecamera. Se la telecamera si avvicina troppo o troppo poco, limita lo zoom per mantenerla entro i confini.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>WheelEvent</code>.</p>
+                    </div>
+
+                    <!-- Evento: touchstart -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">touchstart</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando un'area designata dello schermo viene toccata.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Simula la pressione di un tasto specifico, avviando il movimento corrispondente.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>TouchEvent</code>.</p>
+                    </div>
+
+                    <!-- Evento: touchend -->
+                    <div class="event mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">touchend</h3>
+                        <p class="mb-2"><strong>Descrizione:</strong> Evento che si attiva quando un'area designata dello schermo viene rilasciata.</p>
+                        <p class="mb-2"><strong>Funzionamento:</strong> Simula il rilascio di un tasto specifico, fermando il movimento corrispondente.</p>
+                        <p class="mb-2"><strong>Parametri:</strong> Evento <code>event</code> di tipo <code>TouchEvent</code>.</p>
+                    </div>
+                </section>
+
+                <section id="notes" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Note</h2>
+                    <p class="mb-2"><strong>Gestione dei confini:</strong> Il codice è progettato per mantenere la telecamera entro i limiti della strada. Questo è particolarmente importante in ambienti virtuali in cui l'utente deve rimanere all'interno di un'area specifica.</p>
+                    <p class="mb-2"><strong>Interazione con slider:</strong> Il codice prevede l'interazione con elementi UI, come slider, per evitare che queste interferiscano con i controlli della telecamera.</p>
+                    <p><strong>Input multipiattaforma:</strong> Lo script è progettato per funzionare su una varietà di dispositivi, supportando tastiere, mouse, touch screen e gamepad, rendendolo molto flessibile in contesti diversi.</p>
+                </section>
+            </section>
+            <!-- Floating button to return to top -->
+            <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 hover:bg-gray-700">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </main>
+        <footer class="bg-gray-900 text-white p-4">
+            <div class="container mx-auto text-center max-w-screen-lg">
+                <p>&copy; 2024 Luca Polese. All rights reserved.</p>
+            </div>
+        </footer>
+        <script>
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+            });
+
+            // Show/hide "Back to top" button
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    backToTopButton.classList.remove('opacity-0');
+                    backToTopButton.classList.add('opacity-100');
+                } else {
+                    backToTopButton.classList.remove('opacity-100');
+                    backToTopButton.classList.add('opacity-0');
+                }
+            });
+
+            // Scroll to top functionality
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
+    </body>
+
+</html>
