@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="it">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Documentazione progetto - A glimpse of city</title>
+        <!-- Tailwind CSS CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body class="bg-gray-100 text-gray-900">
+        <header class="bg-gray-900 text-white p-4 w-full z-50 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center max-w-screen-lg">
+                <div class="brand">
+                    <h1 class="text-3xl font-semibold">A glimpse of city</h1>
+                    <h2 class="text-lg font-mono">objUtils.js</h2>
+                </div>
+                <!-- Visibile solo su schermi medi e più grandi -->
+                <a href="../index.html" class="hidden md:block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                    <i class="fas fa-bars fa-2x"></i>
+                </button>
+            </div>
+
+            <nav class="md:hidden absolute top-16 right-0 w-48 bg-gray-800 rounded-lg mt-2 hidden" id="nav-menu">
+                <ul class="flex flex-col space-y-2 py-4 px-6">
+                    <li><a href="#overview" class="hover:text-gray-300">Panoramica</a></li>
+                    <li><a href="#functions" class="hover:text-gray-300">Funzioni</a></li>
+                    <li><a href="#events" class="hover:text-gray-300">Gestione eventi</a></li>
+                    <li><a href="#notes" class="hover:text-gray-300">Note</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Contenuto Principale -->
+        <main class="flex">
+            <!-- Sidebar -->
+            <aside class="sidebar bg-white p-6 border-r border-gray-300 hidden md:block sticky top-0 h-screen overflow-y-auto w-64">
+                <h2 class="text-xl font-semibold mb-4">Indice</h2>
+                <ul class="space-y-3">
+                    <li><a href="#overview" class="text-blue-500 hover:underline">Panoramica</a></li>
+                    <li><a href="#functions" class="text-blue-500 hover:underline">Funzioni</a></li>
+                    <li><a href="#events" class="hover:text-gray-300">Gestione eventi</a></li>
+                    <li><a href="#notes" class="text-blue-500 hover:underline">Note</a></li>
+                </ul>
+            </aside>
+
+            <!-- Area di Contenuto -->
+            <section class="content flex-1 p-8 bg-gray-50">
+                <div class="flex justify-end">
+                    <!-- Visibile solo su schermi piccoli -->
+                    <a href="../index.html" class="block md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                </div>
+                <section id="overview" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Panoramica</h2>
+                    <p>Questo file contiene una serie di funzioni JavaScript per analizzare e gestire modelli 3D informato OBJ e MTL, rendendoli compatibili con WebGL per il rendering. Le funzioni includono il parsing di file MTL per estrarre proprietà dei materiali (come colore, texture, trasparenza), e di file OBJ per gestire geometrie 3D, vertici, texture e normali. Inoltre, il file prevede la configurazione di texture e materiali di default, calcola le dimensioni del modello per il posizionamento nello spazio 3D e integra le geometrie con i materiali associati per consentire un rendering corretto ed efficiente in WebGL.</p>
+                </section>
+
+                <section id="functions" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Funzioni</h2>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all"> parseMapArgs(unparsedArgs)</h3>
+                        <p><strong>Descrizione:</strong> Gestisce e analizza gli argomenti non elaborati delle mappe di
+                            texture.</p>
+                        <p><strong>Funzionamento:</strong></p> Questa funzione si occupa della gestione e dell'analisi
+                        degli argomenti per le mappe di texture. Al momento, non implementa opzioni avanzate di parsing
+                        e restituisce direttamente gli argomenti non elaborati.
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>unparsedArgs (Array):</code>Gli argomenti non elaborati relativi alla mappa di
+                                texture.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Array:</code> Gli argomenti non elaborati per le mappe di texture.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">parseMTL(text)</h3>
+                        <p><strong>Descrizione:</strong> Analizza il contenuto di un file MTL (Material Template
+                            Library) e restituisce un oggetto con le informazioni sui materiali definiti.</p>
+                        <p><strong>Funzionamento:</strong> Questa funzione legge e analizza il testo di un file MTL, che
+                            definisce i materiali e le loro proprietà. Utilizza una serie di parole chiave per
+                            determinare le proprietà del materiale, come il colore ambientale, il colore diffuso, la
+                            mappa di texture e altri attributi. I materiali vengono memorizzati in un oggetto,
+                            utilizzando i nomi dei materiali come chiavi.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>text (String):</code> Il contenuto del file MTL da analizzare.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Object:</code> Un oggetto che mappa i nomi dei materiali alle loro proprietà,
+                                inclusi colori, texture e altre impostazioni.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">parseOBJ(text)</h3>
+                        <p><strong>Descrizione:</strong> Analizza il contenuto di un file OBJ e restituisce una
+                            struttura con le geometrie e le librerie di materiali associate.</p>
+                        <p><strong>Funzionamento:</strong> Questa funzione legge e analizza il testo di un file OBJ, che
+                            definisce la geometria e i materiali di un modello 3D. Estrae le informazioni sui vertici,
+                            le coordinate delle texture, le normali e i colori. I dati vengono organizzati in strutture
+                            WebGL e le geometrie vengono suddivise in parti con le rispettive informazioni sui
+                            materiali.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>text (String):</code> Il contenuto del file OBJ da analizzare.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Object:</code> Un oggetto contenente due proprietà:</li>
+                            <ul class="list-disc list-inside ml-8">
+                                <li><code>geometries (Array):</code> Un array di oggetti che rappresentano le geometrie,
+                                    ciascuna associata a un materiale e ai dati di vertice.</li>
+                                <li><code>materialLibs (Array):</code> Un array di percorsi a file MTL associati al file
+                                    OBJ.</li>
+                            </ul>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">setUpDefaultTexture(gl)
+                        </h3>
+                        <p><strong>Descrizione:</strong> Imposta le texture predefinite in un contesto WebGL.</p>
+                        <p><strong>Funzionamento:</strong> Questa funzione crea e assegna texture predefinite utilizzate
+                            come valori di default quando non sono specificate altre texture. Le texture predefinite
+                            includono una texture bianca e una mappa normale predefinita. Inoltre, viene creato un
+                            materiale predefinito con proprietà base.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>gl (WebGLRenderingContext):</code> Il contesto WebGL nel quale le texture verranno
+                                create.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">getExtents(positions)
+                        </h3>
+                        <p><strong>Descrizione:</strong> Calcola gli estremi di una serie di posizioni nel sistema di
+                            coordinate 3D.</p>
+                        <p><strong>Funzionamento:</strong> Questa funzione determina i valori minimi e massimi delle
+                            coordinate di un insieme di posizioni 3D. Viene utilizzata per calcolare l'area di bounding
+                            di un modello o una scena.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>positions (Array):</code> Un array di coordinate 3D.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Object:</code> Un oggetto contenente due proprietà:</li>
+                            <ul class="list-disc list-inside ml-8">
+                                <li><code>min (Array):</code> Il vettore che rappresenta i valori minimi delle
+                                    coordinate.</li>
+                                <li><code>max (Array):</code> Il vettore che rappresenta i valori massimi delle
+                                    coordinate.</li>
+                            </ul>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">getGeometriesExtents(geometries)</h3>
+                        <p><strong>Descrizione:</strong> Calcola gli estremi complessivi di tutte le geometrie fornite.
+                        </p>
+                        <p><strong>Funzionamento:</strong> Questa funzione utilizza <code>getExtents</code> per
+                            determinare gli estremi globali (minimi e massimi) di tutte le geometrie in un array.
+                            Aggrega i risultati per trovare i limiti complessivi di tutte le geometrie.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>geometries (Array):</code> Un array di oggetti di geometria, ciascuno contenente
+                                dati di posizione.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Object:</code> Un oggetto contenente due proprietà:</li>
+                            <ul class="list-disc list-inside ml-8">
+                                <li><code>min (Array):</code> Il vettore che rappresenta i valori minimi globali delle
+                                    coordinate.</li>
+                                <li><code>max (Array):</code> Il vettore che rappresenta i valori massimi globali delle
+                                    coordinate.</li>
+                            </ul>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">loadObj(gl, objHref)
+                        </h3>
+                        <p><strong>Descrizione:</strong> Carica e processa un file OBJ in un contesto WebGL, inclusi i
+                            materiali e le texture.</p>
+                        <p><strong>Funzionamento:</strong> Questa funzione esegue il caricamento asincrono di un file
+                            OBJ e dei suoi materiali associati. Analizza il file OBJ e i file MTL correlati, crea
+                            texture se necessario e prepara le informazioni di rendering per WebGL. Modifica i materiali
+                            per evidenziare le mappe speculari.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>gl (WebGLRenderingContext):</code> Il contesto WebGL utilizzato per creare e
+                                gestire le texture e i buffer.</li>
+                            <li><code>objHref (String):</code> Il percorso del file OBJ da caricare.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Array:</code> Un array di oggetti che rappresentano le parti renderizzabili del
+                                modello 3D, ciascuno contenente informazioni sui materiali e i buffer WebGL.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="notes" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Note
+                    </h2>
+                    <ul>
+                        <li class="mt-4"><strong>Integrazione Materiali e Texture:</strong>
+                            <p>I materiali e le texture sono strettamente legati alle geometrie tramite l'uso delle librerie materiali specificate nel file OBJ (<code>mtllib</code>). Un aspetto notevole è il caricamento asincrono delle texture, che utilizza la funzione <code>createTexture</code> per garantire che ogni texture sia caricata prima di essere associata al materiale, migliorando l'efficienza del rendering. Inoltre, la possibilità di esagerare la mappa speculare modificando la lucentezza e il colore speculare offre una flessibilità visiva significativa.</p>
+                        </li>
+                        <li class="mt-4"><strong>Set Up delle Texture di Default:</strong>
+                            <p>La funzione <code>setUpDefaultTexture</code> crea texture di default per assicurare che il rendering sia comunque possibile in assenza di texture specifiche nel file OBJ/MTL.
+                            Questo è particolarmente utile per gestire casi in cui i file siano incompleti o manchino di texture, evitando errori di rendering e garantendo un fallback sicuro.</p>
+                        </li>
+                        <li class="mt-4"><strong>Ottimizzazione per WebGL:</strong>
+                            <p>Il codice è ottimizzato per l'integrazione con WebGL. L’uso della funzione <code class="break-all">webglUtils.createBufferInfoFromArrays</code> permette di generare buffer direttamente dai dati estratti dai file OBJ. Questo approccio non solo semplifica il codice, ma migliora anche le prestazioni del rendering, poiché minimizza la quantità di trasformazioni necessarie per passare dai dati del modello ai buffer WebGL.</p>
+                        </li>
+                        <li class="mt-4"><strong>Gestione Asincrona del Caricamento:</strong>
+                            <p>La funzione <code>loadObj</code> utilizza operazioni asincrone (<code>async/await</code>) per caricare file OBJ e MTL, gestendo le dipendenze tra i file in modo efficiente. L'uso di <code>Promise.all</code> per caricare più librerie di materiali contemporaneamente è un dettaglio importante che migliora la velocità di caricamento e garantisce che tutte le risorse siano disponibili prima del rendering.</p>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <!-- Floating button to return to top -->
+            <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 hover:bg-gray-700">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </main>
+        <footer class="bg-gray-900 text-white p-4">
+            <div class="container mx-auto text-center max-w-screen-lg">
+                <p>&copy; 2024 Luca Polese. All rights reserved.</p>
+            </div>
+        </footer>
+        <script>
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+            });
+
+            // Show/hide "Back to top" button
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    backToTopButton.classList.remove('opacity-0');
+                    backToTopButton.classList.add('opacity-100');
+                } else {
+                    backToTopButton.classList.remove('opacity-100');
+                    backToTopButton.classList.add('opacity-0');
+                }
+            });
+
+            // Scroll to top functionality
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
+    </body>
+
+</html>
