@@ -136,14 +136,44 @@
                     <p>Questa sezione raccoglie informazioni aggiuntive e approfondimenti sullo sviluppo delle funzionalità contenute in questo file. La funzione <code>getWebGLContext</code> è progettata per essere flessibile e compatibile con diversi ambienti di rendering. È importante notare che il supporto per WebGL può variare tra i browser, pertanto la funzione gestisce il caso in cui WebGL non sia disponibile, restituendo <code>null</code>.</p>
                 </section>
             </section>
+            <!-- Floating button to return to top -->
+            <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 hover:bg-gray-700">
+                <i class="fas fa-arrow-up"></i>
+            </button>
         </main>
-
-
+        <footer class="bg-gray-900 text-white p-4">
+            <div class="container mx-auto text-center max-w-screen-lg">
+                <p>&copy; 2024 Luca Polese. All rights reserved.</p>
+            </div>
+        </footer>
         <script>
-            document.getElementById('menu-toggle').addEventListener('click', function () {
-                var navMenu = document.getElementById('nav-menu');
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            menuToggle.addEventListener('click', () => {
                 navMenu.classList.toggle('hidden');
+            });
+
+            // Show/hide "Back to top" button
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    backToTopButton.classList.remove('opacity-0');
+                    backToTopButton.classList.add('opacity-100');
+                } else {
+                    backToTopButton.classList.remove('opacity-100');
+                    backToTopButton.classList.add('opacity-0');
+                }
+            });
+
+            // Scroll to top functionality
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         </script>
     </body>
+
 </html>
