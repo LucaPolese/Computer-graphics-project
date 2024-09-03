@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="it">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Documentazione progetto - A glimpse of city</title>
+        <!-- Tailwind CSS CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body class="bg-gray-100 text-gray-900">
+        <header class="bg-gray-900 text-white p-4 w-full z-50 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center max-w-screen-lg">
+                <div class="brand">
+                    <h1 class="text-3xl font-semibold">A glimpse of city</h1>
+                    <h2 class="text-lg font-mono">textureUtils.js</h2>
+                </div>
+                <!-- Visibile solo su schermi medi e più grandi -->
+                <a href="../index.html" class="hidden md:block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+                    <i class="fas fa-bars fa-2x"></i>
+                </button>
+            </div>
+
+            <nav class="md:hidden absolute top-16 right-0 w-48 bg-gray-800 rounded-lg mt-2 hidden" id="nav-menu">
+                <ul class="flex flex-col space-y-2 py-4 px-6">
+                    <li><a href="#overview" class="hover:text-gray-300">Panoramica</a></li>
+                    <li><a href="#functions" class="hover:text-gray-300">Funzioni</a></li>
+                    <li><a href="#notes" class="hover:text-gray-300">Note</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Contenuto Principale -->
+        <main class="flex">
+            <!-- Sidebar -->
+            <aside class="sidebar bg-white p-6 border-r border-gray-300 hidden md:block sticky top-0 h-screen overflow-y-auto w-64">
+                <h2 class="text-xl font-semibold mb-4">Indice</h2>
+                <ul class="space-y-3">
+                    <li><a href="#overview" class="text-blue-500 hover:underline">Panoramica</a></li>
+                    <li><a href="#functions" class="text-blue-500 hover:underline">Funzioni</a></li>
+                    <li><a href="#notes" class="text-blue-500 hover:underline">Note</a></li>
+                </ul>
+            </aside>
+
+            <!-- Area di Contenuto -->
+            <section class="content flex-1 p-8 bg-gray-50">
+                <div class="flex justify-end">
+                    <!-- Visibile solo su schermi piccoli -->
+                    <a href="../index.html" class="block md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Home</a>
+                </div>
+
+                <section id="overview" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Panoramica</h2>
+                    <p>Questa documentazione copre una serie di funzioni JavaScript per la gestione della creazione di texture, la generazione di vettori tangenti per il normal mapping e l'attivazione o disattivazione di funzionalità di rendering come il normal mapping, la trasparenza e le riflessioni in un contesto WebGL. Queste utility supportano geometrie sia indicizzate che non indicizzate, aiutando nelle tecniche di rendering avanzato.</p>
+                </section>
+
+                <section id="functions" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Funzioni</h2>
+
+                    <div class="function mb-8">
+                        <div class="function mb-8">
+                            <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">isPowerOf2(value)</h3>
+                            <p><strong>Descrizione:</strong> Determina se un valore numerico è una potenza di 2, utile per l'ottimizzazione delle dimensioni delle texture nel rendering.</p>
+                            <p><strong>Funzionamento:</strong> Controlla se il numero ha un singolo bit impostato a 1, utilizzando un'operazione bitwise.</p>
+                            <p><strong>Parametri:</strong></p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><code>value (Number)</code>: Il numero da controllare.</li>
+                            </ul>
+                            <p><strong>Ritorna:</strong></p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li><code>Boolean</code>: <code>true</code> se il numero è una potenza di 2, altrimenti <code>false</code>.</li>
+                            </ul>
+                        </div>
+
+                        <p><strong>Funzionamento:</strong> La funzione utilizza una tecnica bitwise per verificare la condizione. Se un numero è una potenza di 2, ha un solo bit impostato a 1 nel suo formato binario. La sottrazione di 1 da tale numero invertirebbe tutti i bit a destra di quel bit singolo, rendendo quindi l'operazione <code>value & (value - 1)</code> uguale a 0. Questo metodo è molto efficiente poiché evita cicli o operazioni più complesse.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>value (Number)</code>: Il numero intero positivo che deve essere verificato.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Boolean</code>: Restituisce <code>true</code> se il numero è una potenza di 2, altrimenti <code>false</code>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">create1PixelTexture(gl, pixel)</h3>
+                        <p><strong>Descrizione:</strong> Questa funzione crea una texture di 1x1 pixel, che funge da segnaposto temporaneo in applicazioni di grafica 3D. È particolarmente utile quando si deve iniziare a lavorare con una texture che non è ancora stata caricata, permettendo al programmatore di evitare errori di rendering o tempi morti visivi. La texture segnaposto viene successivamente sostituita con una texture più complessa una volta che i dati dell'immagine sono completamente caricati.</p>
+                        <p><strong>Funzionamento:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Creazione della Texture:</strong> La funzione utilizza <code>gl.createTexture()</code> per creare un nuovo oggetto texture nel contesto WebGL.</li>
+                            <li><strong>Binding della Texture:</strong> La texture appena creata viene "bindata" al contesto WebGL tramite <code>gl.bindTexture(gl.TEXTURE_2D, texture)</code>, rendendola la texture corrente su cui operare.</li>
+                            <li><strong>Definizione della Texture:</strong> La funzione definisce la texture come un'immagine di 1x1 pixel utilizzando <code>gl.texImage2D()</code>, impostando i canali di colore secondo i valori forniti nel parametro pixel.</li>
+                        </ul>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>gl (WebGLRenderingContext)</code>: Il contesto WebGL che gestisce lo stato e le operazioni di rendering.</li>
+                            <li><code>pixel (Array)</code>: Un array di 4 numeri interi che rappresentano i valori RGBA del colore del pixel, con ogni valore che può variare da 0 a 255.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>WebGLTexture</code>: Restituisce un oggetto WebGLTexture rappresentante la texture 1x1 creata.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">createTexture(gl, url)</h3>
+                        <p><strong>Descrizione:</strong> Crea una texture a partire da un'immagine specificata da un URL. La funzione gestisce sia la creazione immediata di una texture segnaposto (inizialmente un pixel blu 1x1), sia il caricamento asincrono dell'immagine vera e propria, che sostituirà la texture segnaposto una volta caricata. È una funzione cruciale per caricare e gestire le texture nelle applicazioni WebGL in modo efficiente e senza bloccare l'esecuzione del programma.</p>
+                        <p><strong>Funzionamento:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Creazione della Texture Segnaposto:</strong> La funzione crea una texture 1x1 di colore blu utilizzando la funzione <code>create1PixelTexture()</code>.</li>
+                            <li><strong>Caricamento Asincrono dell'Immagine:</strong> Utilizza un oggetto Image per caricare l'immagine da un URL fornito, sostituendo la texture segnaposto con l'immagine caricata una volta che questa è disponibile.</li>
+                            <li><strong>Aggiornamento della Texture:</strong> Una volta che l'immagine è caricata, la funzione aggiorna la texture nel contesto WebGL con i nuovi dati dell'immagine, applicando eventuali impostazioni di wrapping e mipmapping.</li>
+                        </ul>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>gl (WebGLRenderingContext)</code>: Il contesto WebGL che gestisce lo stato e le operazioni di rendering.</li>
+                            <li><code>url (String)</code>: L'URL dell'immagine che deve essere caricata come texture.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>WebGLTexture</code>: Restituisce un oggetto WebGLTexture rappresentante la texture creata dall'immagine.</li>
+                        </ul>
+                    </div>
+
+                    <div class="function mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-blue-600 font-mono break-all">generateTangents(vertices, indices, texCoords, normals)</h3>
+                        <p><strong>Descrizione:</strong> Genera tangenti per la geometria, necessarie per il normal mapping in WebGL.</p>
+                        <p><strong>Funzionamento:</strong> Calcola vettori tangenti per ogni vertice della geometria basandosi su coordinate texture, indici e normali.</p>
+                        <p><strong>Parametri:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>vertices (Array)</code>: Vertici della geometria.</li>
+                            <li><code>indices (Array)</code>: Indici della geometria.</li>
+                            <li><code>texCoords (Array)</code>: Coordinate texture della geometria.</li>
+                            <li><code>normals (Array)</code>: Normali della geometria.</li>
+                        </ul>
+                        <p><strong>Ritorna:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><code>Array</code>: Array di vettori tangenti generati.</li>
+                        </ul>
+                    </div>
+
+                </section>
+
+                <section id="notes" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 border-b-4 border-blue-500 inline-block pb-2">Note</h2>
+                    
+                    <ul>
+                        <li><strong>Compatibilità e Performance:</strong> L'uso di texture con dimensioni potenze di 2 (POT) non è solo una restrizione tecnica, ma anche una pratica che migliora le performance. Texture POT consentono l'uso efficiente di funzionalità come mipmapping e wrapping modes avanzati, riducendo l'utilizzo della memoria GPU e migliorando la velocità di rendering. Anche se WebGL supporta texture con dimensioni non potenze di 2 (NPOT), queste possono comportare limitazioni, come l'impossibilità di utilizzare mipmapping, e possono causare problemi di compatibilità su dispositivi meno recenti o con driver grafici obsoleti.</li>
+
+                        <li class="mt-4"><strong>Precisione vs. Performance nella Generazione dei Vettori Tangenti:</strong> La generazione dei vettori tangenti può essere computazionalmente intensiva, soprattutto per modelli complessi con un alto numero di vertici. Vettori tangenti accurati sono essenziali per un normal mapping efficace, contribuendo a dettagli di superficie realistici senza aumentare la complessità geometrica del modello. Ciò è particolarmente importante in applicazioni come simulazioni dove l'immersione visiva è cruciale.</li>
+                        
+                        
+                        <li class="mt-4"><strong>Fluidità dell'Interfaccia:</strong> L'uso di caricamento asincrono (come nella funzione <code>createTexture</code>) non è solo una misura per evitare che il thread principale si blocchi, ma è anche un passo importante per migliorare l'esperienza utente. In un'applicazione web, l'asincronicità consente al rendering e all'interazione dell'utente di proseguire senza interruzioni anche quando risorse come immagini e texture richiedono tempo per essere caricate.</li>
+                    </ul>
+                </section>
+                
+            </section>
+            <!-- Floating button to return to top -->
+            <button id="back-to-top" aria-label="Back to top" class="fixed bottom-3 right-3 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-opacity duration-300 opacity-0 hover:bg-gray-700">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </main>
+        <footer class="bg-gray-900 text-white p-4">
+            <div class="container mx-auto text-center max-w-screen-lg">
+                <p>&copy; 2024 Luca Polese. All rights reserved.</p>
+            </div>
+        </footer>
+        <script>
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('hidden');
+            });
+
+            // Show/hide "Back to top" button
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    backToTopButton.classList.remove('opacity-0');
+                    backToTopButton.classList.add('opacity-100');
+                } else {
+                    backToTopButton.classList.remove('opacity-100');
+                    backToTopButton.classList.add('opacity-0');
+                }
+            });
+
+            // Scroll to top functionality
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
+    </body>
+
+</html>
